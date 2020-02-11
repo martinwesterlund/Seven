@@ -1,4 +1,4 @@
-# bjmp
+# seven
 
 ## Project setup
 ```
