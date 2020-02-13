@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
     state: {
+        testVariabel: null,
         ableToPlay: null,
         deck: [],
         playedCardsArray: [],
@@ -43,7 +44,37 @@ export const store = new Vuex.Store({
 
     },
 
+    actions: {
+        computersTurn(context, player) {
+            if(player.cards.length > 0){
+                setTimeout(() => {
+                    let card = null
+                    for (let i = 0; i < player.cards.length; i++) {
+                        if (player.cards[i].isPlayable) {
+                            card = player.cards[i]
+                            
+                            break
+    
+                        }
+                    }
+                    if(card != null){
+                        this.commit('placeCard', {card, player})
+
+                    } else {
+                        this.commit('switchTurn')
+                    }
+                }, 2000)
+            }else {
+                this.commit('switchTurn')
+            }
+            
+        }
+
+
+    },
+
     mutations: {
+
         createDeck(state) {
             state.deck = []
             const suits = ['♥', '♠', '♦', '♣']
@@ -55,7 +86,8 @@ export const store = new Vuex.Store({
                     state.deck.push({
                         suit: suits[n],
                         value: value[m],
-                        uniqueValue: (13 * (n)) + (m + 1)
+                        uniqueValue: (13 * (n)) + (m + 1),
+                        isPlayable: false
                     })
                 }
             }
@@ -91,63 +123,84 @@ export const store = new Vuex.Store({
 
                 }
             }
+            if (state.playersTurn !== 1) {
+                this.commit('checkIfPlayerAbleToPlay')
+            }
+
+
         },
 
         doNotSwitchTurn(state) {
             state.round++
             // state.playersTurn--
-            if (state.playersTurn < 1) {
-                state.playersTurn = state.players.length
-            }
+            // if (state.playersTurn < 1) {
+            //     state.playersTurn = state.players.length
+            // }
             if (state.players[state.playersTurn - 1].cards.length < 1) {
                 this.commit('switchTurn')
             }
             this.commit('checkIfPlayerAbleToPlay')
         },
-        switchTurn(state) {
 
+        //Se över denna - kukar ur i slutet av ett spel
+        switchTurn(state) {
             state.round++
             state.playersTurn++
-            if (state.playersTurn > state.players.length) {
-                state.playersTurn = 1
-            }
+            
             if (state.playedCardsArray.length === 52) {
-                console.log('Slut på spelet')
+                console.log('52 kort lagda, spelet slut')
                 state.playersTurn = 0
+           
+            } else if (state.playersTurn > state.players.length) {
+                console.log('Spelare 6s tur, men finns ej så det blir spelare 1s tur')
+                state.playersTurn = 1
+                this.commit('checkIfPlayerAbleToPlay')
+               
+            } else {
+                console.log('Skickar vidare till checkIfAbleToPlay')
+                this.commit('checkIfPlayerAbleToPlay')
             }
-            else if (state.players[state.playersTurn - 1].cards.length < 1) {
-                this.commit('switchTurn')
-            }
-            this.commit('checkIfPlayerAbleToPlay')
+
+
+            
+            
         },
 
         checkIfPlayerAbleToPlay(state) {
             state.ableToPlay = false
-            if (state.playedCardsArray.length === 52) {
-                console.log('Slut på spelet')
-                state.playersTurn = 0
-            }
-            for (let i = 0; i < state.players[state.playersTurn - 1].cards.length; i++) {
-                console.log(state.players[state.playersTurn - 1].cards[i].uniqueValue)
-                let card = state.players[state.playersTurn - 1].cards[i]
-                if (
-                    (state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue + 1) && (card.uniqueValue % 13) < 7 && (card.uniqueValue % 13) > 0) ||
-                    (state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue - 1) && (card.uniqueValue % 13) > 7 && card.uniqueValue % 13) ||
-                    (card.uniqueValue + 6) % 13 === 0) {
-                    state.ableToPlay = true
+            if(state.playedCardsArray.length !== 52){
+                console.log('Alla 52 kort är inte lagda, sök igenom spelarens kort')
+                for (let i = 0; i < state.players[state.playersTurn - 1].cards.length; i++) {
+                    let card = state.players[state.playersTurn - 1].cards[i]
+                    if (
+                                                                         
+                        (state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue - 1) && ((card.uniqueValue % 13) > 7 || (card.uniqueValue % 13) === 0)) ||
+                        ((state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue + 1) && (card.uniqueValue % 13) < 7 && card.uniqueValue % 13 > 0)) ||
+                        (card.uniqueValue + 6) % 13 === 0) {
+                            console.log('Hittade spelbart kort')
+                        card.isPlayable = true
+                        state.ableToPlay = true
+                    }
                 }
+                if (state.playersTurn !== 1) {
+                    console.log('Har nu kontrollerat spelarens kort, som verkar tillhöra en dator')
+                    this.dispatch('computersTurn', state.players[state.playersTurn - 1])
+                } else if(state.players[0].cards.length < 1){
+                    console.log('Människospelarens kort är slut, gå till nästa spelare')
+                    this.commit('switchTurn')
+                } 
             }
+            
         },
 
         placeCard(state, { card, player }) {
 
-            // 7
-
+            console.log(player.name + ' lägger ' + card.suit + card.value)
             if (state.round > 0) {
 
 
                 if ((card.uniqueValue + 6) % 13 === 0) {
-                    console.log('sjua')
+                    
                     state.playedCardsArray.push(card)
 
                     switch (card.suit) {
@@ -166,7 +219,7 @@ export const store = new Vuex.Store({
                 }
                 // mindre än 7
                 else if ((card.uniqueValue % 13) < 7 && (card.uniqueValue % 13) > 0 && state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue + 1)) {
-                    console.log('mindre än sjua')
+                   
                     state.playedCardsArray.push(card)
                     switch (card.suit) {
                         case '♥': state.playedCards[9].card = card
@@ -180,7 +233,7 @@ export const store = new Vuex.Store({
                     }
                     player.cards.splice(player.cards.map(function (x) { return x.uniqueValue }).indexOf(card.uniqueValue), 1)
                     if ((card.uniqueValue + 12) % 13 === 0) {
-                        console.log('Ess')
+                        
                         this.commit('doNotSwitchTurn')
                     }
                     else {
@@ -190,7 +243,7 @@ export const store = new Vuex.Store({
 
                 // större än 7
                 else if (((card.uniqueValue % 13) > 7 || (card.uniqueValue % 13 === 0)) && state.playedCardsArray.find(x => x.uniqueValue === card.uniqueValue - 1)) {
-                    console.log('större än sjua')
+                    
                     state.playedCardsArray.push(card)
                     switch (card.suit) {
                         case '♥': state.playedCards[5].card = card
@@ -204,7 +257,6 @@ export const store = new Vuex.Store({
                     }
                     player.cards.splice(player.cards.map(function (x) { return x.uniqueValue }).indexOf(card.uniqueValue), 1)
                     if (card.uniqueValue % 13 === 0) {
-                        console.log('Kung')
                         this.commit('doNotSwitchTurn')
                     }
                     else {
@@ -212,11 +264,7 @@ export const store = new Vuex.Store({
                     }
 
                 }
-                // // Ess eller Kung -> 1, 14, 27, 40 (x+12) Kung 13,26,
-                // if (((card.uniqueValue + 12) % 13 === 0) || (card.uniqueValue % 13) === 0) {
-                //     console.log('Kung eller ess')
-                //     this.commit('doNotSwitchTurn')
-                // }
+
             }
 
             else if (card.uniqueValue === 7) {

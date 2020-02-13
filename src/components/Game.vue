@@ -11,6 +11,7 @@
             
             :key="card.index"
             :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
+            :class="{playable : card.isPlayable}"
           >{{card.suit + ' ' + card.value}}</div>
         </div>
       </div>
@@ -33,6 +34,7 @@
     <button v-if='state.ableToPlay == false' @click="pass()">Pass!</button>
     <div v-if='state.playersTurn!=null'>Spelare {{ state.playersTurn }}s tur</div>
     <div>{{ state.playedCardsArray}}</div>
+    <div>{{ state.testVariabel }}</div>
   </div>
 </template>
 
@@ -49,12 +51,13 @@ export default {
   methods: {
     startGame() {
       this.$store.commit('startGame')
+     
     },
     pass(){
       this.$store.commit('switchTurn')
     },
     placeCard(card, player){
-      console.log(player)
+      
       this.$store.commit('placeCard', {card, player })
     }
   },
@@ -96,6 +99,10 @@ export default {
   height: 60px;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.playable {
+  background-color: #cdffcd;
 }
 .game-field {
   display: grid;
