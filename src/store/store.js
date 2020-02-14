@@ -63,7 +63,7 @@ export const store = new Vuex.Store({
                     } else {
                         this.commit('switchTurn')
                     }
-                }, 2000)
+                }, 500)
             }else {
                 this.commit('switchTurn')
             }
@@ -132,23 +132,28 @@ export const store = new Vuex.Store({
 
         doNotSwitchTurn(state) {
             state.round++
-            // state.playersTurn--
-            // if (state.playersTurn < 1) {
-            //     state.playersTurn = state.players.length
-            // }
-            if (state.players[state.playersTurn - 1].cards.length < 1) {
+            console.log('Spelare' + state.playersTurn + 's tur igen')
+            if (state.playedCardsArray.length === 52) {
+                console.log('52 kort lagda, spelet slut 1')
+                state.playersTurn = 0
+           
+            }else if (state.players[state.playersTurn - 1].cards.length < 1) {
+                console.log('Men'  + state.playersTurn + ' hade inga fler kort')
                 this.commit('switchTurn')
+            }else{
+                this.commit('checkIfPlayerAbleToPlay')
             }
-            this.commit('checkIfPlayerAbleToPlay')
+            
         },
 
         //Se över denna - kukar ur i slutet av ett spel
         switchTurn(state) {
             state.round++
             state.playersTurn++
+            console.log('Spelare' + state.playersTurn + 's tur')
             
             if (state.playedCardsArray.length === 52) {
-                console.log('52 kort lagda, spelet slut')
+                console.log('52 kort lagda, spelet slut 2')
                 state.playersTurn = 0
            
             } else if (state.playersTurn > state.players.length) {
@@ -168,7 +173,7 @@ export const store = new Vuex.Store({
 
         checkIfPlayerAbleToPlay(state) {
             state.ableToPlay = false
-            if(state.playedCardsArray.length !== 52){
+            if(state.playedCardsArray.length !== 52 && state.players[state.playersTurn -1].cards.length > 0){
                 console.log('Alla 52 kort är inte lagda, sök igenom spelarens kort')
                 for (let i = 0; i < state.players[state.playersTurn - 1].cards.length; i++) {
                     let card = state.players[state.playersTurn - 1].cards[i]
@@ -181,6 +186,9 @@ export const store = new Vuex.Store({
                         card.isPlayable = true
                         state.ableToPlay = true
                     }
+                    else{
+                        console.log('Hittade inget spelbart kort')
+                    }
                 }
                 if (state.playersTurn !== 1) {
                     console.log('Har nu kontrollerat spelarens kort, som verkar tillhöra en dator')
@@ -189,6 +197,9 @@ export const store = new Vuex.Store({
                     console.log('Människospelarens kort är slut, gå till nästa spelare')
                     this.commit('switchTurn')
                 } 
+            } else{
+                console.log('spelare ' + state.playersTurn + 'hade inga fler kort')
+                this.commit('switchTurn')
             }
             
         },
