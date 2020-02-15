@@ -9,6 +9,8 @@ export const store = new Vuex.Store({
         testVariabel: null,
         ableToPlay: null,
         deck: [],
+        scoreBoard: [],
+        speed: 3,
         playedCardsArray: [],
         playedCards: [
             { name: 's7', card: '♠' },
@@ -25,14 +27,19 @@ export const store = new Vuex.Store({
             { name: 'r6', card: '▼' }
         ],
         players: [
-            { name: 'player1', cards: [] },
-            { name: 'player2', cards: [] },
-            { name: 'player3', cards: [] },
-            { name: 'player4', cards: [] },
-            { name: 'player5', cards: [] }
+            { name: 'player1', cards: [], type : 'human' },
+            { name: 'player2', cards: [], type : 'cpu' },
+            { name: 'player3', cards: [], type : 'cpu' },
+            { name: 'player4', cards: [], type : 'cpu' },
+            { name: 'player5', cards: [], type : 'cpu' }
         ],
         playersTurn: null,
-        round: 0
+        round: 0,
+        vueSliderOptions: {
+            interval : 1,
+            min: 1,
+            max: 5
+        }
 
 
 
@@ -63,11 +70,17 @@ export const store = new Vuex.Store({
                     } else {
                         this.commit('switchTurn')
                     }
-                }, 500)
+                }, 2500 / this.state.speed)
             }else {
                 this.commit('switchTurn')
             }
             
+        },
+
+        switchPlayableStatus(context, card){
+            setTimeout(() => {
+                card.isPlayable = false
+            }, 300)
         }
 
 
@@ -120,7 +133,7 @@ export const store = new Vuex.Store({
             for (let i = 0; i < state.players.length; i++) {
                 if (state.players[i].cards.find(x => x.uniqueValue === 7)) {
                     state.playersTurn = i + 1
-
+                    this.commit('setHeartOfSevenAsPlayable', state.players[state.playersTurn - 1])
                 }
             }
             if (state.playersTurn !== 1) {
@@ -146,8 +159,17 @@ export const store = new Vuex.Store({
             
         },
 
-        //Se över denna - kukar ur i slutet av ett spel
+        setHeartOfSevenAsPlayable(state, player){
+            for(let i = 0; i < player.cards.length; i++){
+                if(player.cards[i].uniqueValue === 7){
+                    player.cards[i].isPlayable = true
+                }
+            }
+
+        },
+
         switchTurn(state) {
+            
             state.round++
             state.playersTurn++
             console.log('Spelare' + state.playersTurn + 's tur')
@@ -203,6 +225,10 @@ export const store = new Vuex.Store({
             }
             
         },
+
+        // pushWinnerToScoreBoard(state, player){
+
+        // },
 
         placeCard(state, { card, player }) {
 
@@ -275,6 +301,7 @@ export const store = new Vuex.Store({
                     }
 
                 }
+                
 
             }
 
@@ -284,6 +311,8 @@ export const store = new Vuex.Store({
                 state.playedCards[1].card = card
                 this.commit('switchTurn')
             }
+            // card.isPlayable = false
+            this.dispatch('switchPlayableStatus', card)
 
         }
 
