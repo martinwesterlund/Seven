@@ -27,11 +27,11 @@ export const store = new Vuex.Store({
             { name: 'r6', card: '▼' }
         ],
         players: [
-            { name: 'player1', cards: [], type : 'human' },
-            { name: 'player2', cards: [], type : 'cpu' },
-            { name: 'player3', cards: [], type : 'cpu' },
-            { name: 'player4', cards: [], type : 'cpu' },
-            { name: 'player5', cards: [], type : 'cpu' }
+            { name: 'player1', cards: [], type : 'human', hasTheBox : false },
+            { name: 'player2', cards: [], type : 'cpu', hasTheBox : false },
+            { name: 'player3', cards: [], type : 'cpu', hasTheBox : false },
+            { name: 'player4', cards: [], type : 'cpu', hasTheBox : false },
+            { name: 'player5', cards: [], type : 'cpu', hasTheBox : false }
         ],
         playersTurn: null,
         round: 0,
@@ -334,7 +334,7 @@ export const store = new Vuex.Store({
         12. Om jag har en nia - Lägg 7 eller uppåt i samma färg
         13. Om jag har en femma - Lägg 7 eller nedåt i samma färg
         14. Om jag har en sexa - Lägg 7 eller nedår i samma färg
-        15. Om jag har en åtta - Lägg / eller uppåt i samma färg
+        15. Om jag har en åtta - Lägg 7 eller uppåt i samma färg
         */
 
 
