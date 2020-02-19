@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
     state: {
-        testVariabel: null,
         ableToPlay: null,
         deck: [],
         scoreBoard: [],
@@ -27,28 +26,20 @@ export const store = new Vuex.Store({
             { name: 'r6', card: '▼' }
         ],
         players: [
-            { name: 'player1', cards: [], type : 'human', hasTheBox : false },
-            { name: 'player2', cards: [], type : 'cpu', hasTheBox : false },
-            { name: 'player3', cards: [], type : 'cpu', hasTheBox : false },
-            { name: 'player4', cards: [], type : 'cpu', hasTheBox : false },
-            { name: 'player5', cards: [], type : 'cpu', hasTheBox : false }
+            { name: 'player1', cards: [], type : 'human', hasTheBox : false, roundScore: 0, totalScore: 0},
+            { name: 'player2', cards: [], type : 'cpu', hasTheBox : false, roundScore: 0, totalScore: 0},
+            { name: 'player3', cards: [], type : 'cpu', hasTheBox : false, roundScore: 0, totalScore: 0},
+            { name: 'player4', cards: [], type : 'cpu', hasTheBox : false, roundScore: 0, totalScore: 0},
+            { name: 'player5', cards: [], type : 'cpu', hasTheBox : false, roundScore: 0, totalScore: 0}
         ],
         playersTurn: null,
         round: 0,
+        roundOver : false,
         vueSliderOptions: {
             interval : 1,
             min: 1,
             max: 5
         }
-
-
-
-
-
-
-
-
-
     },
 
     actions: {
@@ -59,15 +50,14 @@ export const store = new Vuex.Store({
                     for (let i = 0; i < player.cards.length; i++) {
                         if (player.cards[i].isPlayable) {
                             card = player.cards[i]
-                            
                             break
-    
                         }
                     }
                     if(card != null){
                         this.commit('placeCard', {card, player})
 
                     } else {
+                        this.commit('getBoxFromOtherPlayer', player)
                         this.commit('switchTurn')
                     }
                 }, 2500 / this.state.speed)
@@ -87,7 +77,39 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
-
+        calcScore(state){
+            for(let i = 0; i < state.players.length; i++){
+                state.players[i].type = 'human'
+                for(let j = 0; j < state.players[i].cards.length; j++){
+                    switch(state.players[i].cards[j].value){
+                        case 'A' : 
+                            state.players[i].roundScore += 15
+                            break
+                        case '10' :
+                            state.players[i].roundScore += 10
+                            break
+                        case 'J' : 
+                            state.players[i].roundScore += 10
+                            break
+                        case 'Q' :
+                            state.players[i].roundScore += 10
+                            break
+                        case 'K' :
+                            state.players[i].roundScore += 10
+                            break
+                        default :    
+                            state.players[i].roundScore += 5
+                    }
+                }
+                if(state.players[i].hasTheBox){
+                    state.players[i].roundScore += 25
+                }
+                state.players[i].totalScore += state.players[i].roundScore
+                console.log(state.players[i].name + ' fick ' + state.players[i].roundScore + ' och totalpoängen är ' + state.players[i].totalScore)
+            }
+            
+            
+        },
         createDeck(state) {
             state.deck = []
             const suits = ['♥', '♠', '♦', '♣']
@@ -104,6 +126,18 @@ export const store = new Vuex.Store({
                     })
                 }
             }
+        },
+
+        getBoxFromOtherPlayer(state, player){
+            for(let i = 0; i < state.players.length; i++){
+                state.players[i].hasTheBox = false
+            }
+            player.hasTheBox = true
+        },
+
+        pass(state){
+            this.commit('getBoxFromOtherPlayer', state.players[0])
+            this.commit('switchTurn')
         },
 
         startGame(state) {
@@ -208,6 +242,40 @@ export const store = new Vuex.Store({
 
         // },
 
+        newRound(state){
+            state.round = 0
+            state.roundOver = false
+            state.ableToPlay = null
+            state.playersTurn = null
+            state.deck = []
+            state.playedCardsArray = []
+            state.playedCards = 
+            [
+                { name: 's7', card: '♠' },
+                { name: 'h7', card: '♥' },
+                { name: 'k7', card: '♣' },
+                { name: 'r7', card: '♦' },
+                { name: 's8', card: '▲' },
+                { name: 'h8', card: '▲' },
+                { name: 'k8', card: '▲' },
+                { name: 'r8', card: '▲' },
+                { name: 's6', card: '▼' },
+                { name: 'h6', card: '▼' },
+                { name: 'k6', card: '▼' },
+                { name: 'r6', card: '▼' }
+            ]
+            for(let i = 0; i < state.players.length; i++){
+                state.players[i].roundScore = 0
+                state.players[i].hasTheBox = false
+                state.players[i].cards = []
+                state.players[i].type = 'cpu'
+
+            }
+            state.players[0].type = 'human'
+            this.commit('createDeck')
+
+        },
+
         placeCard(state, { card, player }) {
 
             console.log(player.name + ' lägger ' + card.suit + card.value)
@@ -308,7 +376,11 @@ export const store = new Vuex.Store({
 
         roundOver(state){
             console.log('Vinnaren av ronden är: ' + state.players[state.playersTurn-1].name)
+            this.commit('calcScore')
+            state.roundOver = true
         }
+
+
 
 
 

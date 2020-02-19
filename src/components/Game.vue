@@ -6,7 +6,7 @@
           class="player"
           v-for="player in state.players"
           :key="player.name"
-          :class="{ myTurn: 'player'+ state.playersTurn === player.name}"
+          :class="[{ myTurn: 'player'+ state.playersTurn === player.name}, {hasTheBox : player.hasTheBox === true}]"
         >
           {{player.name}}
           <div
@@ -43,6 +43,7 @@
     <button @click="startGame()">Dela ut kort</button>
     <button @click="sortCards()">Sortera</button>
     <button v-if="state.ableToPlay == false" @click="pass()">Pass!</button>
+    <button v-if='state.roundOver' @click='newRound()'>Ny rond!</button>
     <div v-if="state.playersTurn!=null">Spelare {{ state.playersTurn }}s tur</div>
     
     <div>{{ state.scoreBoard }}</div>
@@ -67,8 +68,11 @@ export default {
     startGame() {
       this.$store.commit("startGame");
     },
+    newRound(){
+      this.$store.commit('newRound')
+    },
     pass() {
-      this.$store.commit("switchTurn");
+      this.$store.commit("pass");
     },
     placeCard(card, player) {
       this.$store.commit("placeCard", { card, player });
@@ -96,6 +100,10 @@ export default {
 .myTurn {
   opacity: 1;
   pointer-events: all;
+}
+
+.hasTheBox{
+  border-left: 5px solid red;
 }
 
 .unknownCard {
