@@ -40,21 +40,22 @@
       </div>
     </div>
 
-    <button @click="startGame()">Dela ut kort</button>
-    <button @click="sortCards()">Sortera</button>
+    <button v-if='!state.roundOver && state.round === 0' @click="startGame()">Dela ut kort</button>
     <button v-if="state.ableToPlay == false" @click="pass()">Pass!</button>
     <button v-if='state.roundOver' @click='newRound()'>Ny rond!</button>
     <div v-if="state.playersTurn!=null">Spelare {{ state.playersTurn }}s tur</div>
     
-    <div>{{ state.scoreBoard }}</div>
+    <Scoreboard></Scoreboard>
   </div>
 </template>
 
 <script>
 import VueSlider from 'vue-slider-component'
+import Scoreboard from './Scoreboard'
 export default {
   components: {
-    VueSlider
+    VueSlider,
+    Scoreboard
   },
   computed: {
     state() {
@@ -88,6 +89,10 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: ". .";
+}
+
+.players-area{
+  min-width: 650px;
 }
 .player {
   display: flex;
