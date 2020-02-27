@@ -22,8 +22,7 @@
         </div>
       </div>
       <div class="game-field">
-        <vue-slider v-model="state.speed" v-bind='state.vueSliderOptions' />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
+        
         <div
           :id="playedCard.name"
           v-for="playedCard in state.playedCards"
@@ -45,18 +44,13 @@
     <button v-if='state.roundOver' @click='newRound()'>Ny rond!</button>
     <div v-if="state.playersTurn!=null">Spelare {{ state.playersTurn }}s tur</div>
     
-    <Scoreboard></Scoreboard>
   </div>
 </template>
 
 <script>
-import VueSlider from 'vue-slider-component'
-import Scoreboard from './Scoreboard'
+
 export default {
-  components: {
-    VueSlider,
-    Scoreboard
-  },
+  
   computed: {
     state() {
       return this.$store.state;
@@ -146,6 +140,10 @@ export default {
 
 .playable {
   background-color: #cdffcd;
+  /* animation-name: playable;
+  animation-duration: 0.5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite; */
 }
 
 .cpu {
@@ -159,17 +157,27 @@ export default {
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "S8-K H8-K K8-K R8-K" "S7 H7 K7 R7" "S6-E H6-E K6-E R6-E";
 }
+.no-played-card {
+  width: 100px;
+  min-height: 150px;
+  border: 2px dashed black;
+  opacity: 0.2;
+  font-size: 80px !important;
+}
 
 #s7 {
   grid-area: S7;
+  opacity: 0.8;
 }
 
 #h7 {
   grid-area: H7;
+  color: red !important;
 }
 
 #r7 {
   grid-area: R7;
+  color: red !important;
 }
 
 #k7 {
@@ -229,12 +237,7 @@ export default {
   animation-name: fadeIn;
   animation-duration: 0.5s;
 }
-.no-played-card {
-  width: 100px;
-  min-height: 150px;
-  border: 2px dashed black;
-  opacity: 0.2;
-}
+
 
 @keyframes fadeIn {
   from {
@@ -253,4 +256,14 @@ export default {
     transform: rotateY(180deg);
   }
 }
+@keyframes playable {
+  from {
+    background-color: #80f880;
+  }
+  to {
+    background-color: #fff;
+  }
+}
+
+
 </style>

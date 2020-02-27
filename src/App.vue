@@ -1,15 +1,21 @@
 <template>
   <div id="app">
     <Game />
+    <Scoreboard />
+    <Settings />
   </div>
 </template>
 
 <script>
 import Game from "./components/Game.vue";
+import Scoreboard from "./components/Scoreboard.vue";
+import Settings from "./components/Settings.vue";
 
 export default {
   components: {
-    Game
+    Game,
+    Scoreboard,
+    Settings
   },
   created() {
     this.$store.commit("createDeck");
