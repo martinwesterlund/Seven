@@ -104,7 +104,8 @@ export const store = new Vuex.Store({
 
                    
                         if (card != null) {
-                            this.commit('placeCard', { card, player })
+                            this.dispatch('slideAwayCard', { card, player } )
+                            // this.commit('placeCard', { card, player })
 
                         } else {
                             this.commit('getBoxFromOtherPlayer', player)
@@ -117,6 +118,16 @@ export const store = new Vuex.Store({
                 this.commit('switchTurn')
             }
 
+        },
+
+        slideAwayCard(context, { card, player }){
+            if(card.isPlayable){
+                card.slideEffectOn = true
+            }
+            
+            setTimeout(() => {
+                this.commit('placeCard', { card, player })
+            }, 500)
         },
 
 
@@ -180,7 +191,8 @@ export const store = new Vuex.Store({
                         suit: suits[n],
                         value: value[m],
                         uniqueValue: (13 * (n)) + (m + 1),
-                        isPlayable: false
+                        isPlayable: false,
+                        slideEffectOn: false
                     })
                 }
             }

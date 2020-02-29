@@ -15,7 +15,7 @@
             v-for="card in player.cards"
             :key="card.index"
             :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
-            :class="[{playable : card.isPlayable}, {cpu : player.type === 'cpu'}]"
+            :class="[{playable : card.isPlayable}, {cpu : player.type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
           >
             <div class="innerCard">{{card.suit + ' ' + card.value}}</div>
           </div>
@@ -69,8 +69,11 @@ export default {
     pass() {
       this.$store.commit("pass");
     },
-    placeCard(card, player) {
-      this.$store.commit("placeCard", { card, player });
+    // placeCard(card, player) {
+    //   this.$store.commit("placeCard", { card, player });
+    // }
+    placeCard(card, player){
+      this.$store.dispatch('slideAwayCard', { card, player } )
     }
   },
   name: "Game"
@@ -144,6 +147,12 @@ export default {
   animation-duration: 0.5s;
   animation-direction: alternate-reverse;
   animation-iteration-count: infinite; */
+}
+
+.cardSlide{
+  animation: slideCard 0.5s linear;
+  /* transform: translateX(400px);
+  opacity: 0; */
 }
 
 .cpu {
@@ -264,6 +273,21 @@ export default {
     background-color: #fff;
   }
 }
-
+@keyframes slideCard {
+  0% {
+    opacity: 1;
+    transform: translateX(0vw) scale(1) rotate(0deg);
+    /* transform: scale(1); */
+  }
+  50% {
+        opacity: 1;
+        transform: translateX(25vw) scale(3) rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(50vw) scale(1) rotate(360deg);
+    /* transform: scale(1); */
+  }
+}
 
 </style>
