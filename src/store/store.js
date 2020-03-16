@@ -8,29 +8,27 @@ export const store = new Vuex.Store({
     state: {
         ableToPlay: null,
         deck: [],
+        numberOfOpponents: 2,
         scoreBoard: [],
-        speed: 2,
+        speed: 5,
         playedCardsArray: [],
         playedCards: [
-            { name: 's7', card: '♠' },
-            { name: 'h7', card: '♥' },
-            { name: 'k7', card: '♣' },
-            { name: 'r7', card: '♦' },
-            { name: 's8', card: '' },
-            { name: 'h8', card: '' },
-            { name: 'k8', card: '' },
-            { name: 'r8', card: '' },
-            { name: 's6', card: '' },
-            { name: 'h6', card: '' },
-            { name: 'k6', card: '' },
-            { name: 'r6', card: '' }
+            { name: 'S8', card: '' },
+            { name: 'H8', card: '' },
+            { name: 'K8', card: '' },
+            { name: 'R8', card: '' },
+            { name: 'S7', card: '♠' },
+            { name: 'H7', card: '♥' },
+            { name: 'K7', card: '♣' },
+            { name: 'R7', card: '♦' },
+            { name: 'S6', card: '' },
+            { name: 'H6', card: '' },
+            { name: 'K6', card: '' },
+            { name: 'R6', card: '' }
         ],
         players: [
             { name: 'player1', cards: [], type: 'human', hasTheBox: false, roundScore: 0, totalScore: 0 },
-            { name: 'player2', cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 },
-            { name: 'player3', cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 },
-            { name: 'player4', cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 },
-            { name: 'player5', cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 }
+
         ],
         playersTurn: null,
         round: 0,
@@ -51,46 +49,46 @@ export const store = new Vuex.Store({
                     let card = null
 
 
-                    
 
-                    
+
+
                     let aces = player.cards.filter(playerCard => playerCard.value === 'A' && playerCard.isPlayable)
                     let kings = player.cards.filter(playerCard => playerCard.value === 'K' && playerCard.isPlayable)
                     let playableCards = player.cards.filter(playerCard => playerCard.isPlayable === true)
 
-                    if(playableCards.filter(playerCard => playerCard.uniqueValue === 7).length > 0){
+                    if (playableCards.filter(playerCard => playerCard.uniqueValue === 7).length > 0) {
                         card = playableCards.filter(playerCard => playerCard.uniqueValue === 7)[0]
                     } else if (aces.length > 0) {
                         card = aces[0]
                     } else if (kings.length > 0) {
                         card = kings[0]
-                    } else if (playableCards.length > 0){ 
+                    } else if (playableCards.length > 0) {
                         console.log('Letar igenom playable')
                         playableCards.forEach((playableCard) => {
-                            switch(playableCard.uniqueValue % 13){
-                                
-                                case 12 : playableCard.playability = 1
-                                break
-                                case 11 : playableCard.playability = 2
-                                break
-                                case 10 : playableCard.playability = 3
-                                break
-                                case 2 : playableCard.playability = 4
-                                break
-                                case 3 : playableCard.playability = 5
-                                break
-                                case 4 : playableCard.playability = 6
-                                break
-                                case 9 : playableCard.playability = 7
-                                break
-                                case 5 : playableCard.playability = 8
-                                break
-                                case 6 : playableCard.playability = 9
-                                break
-                                case 8 : playableCard.playability = 10
-                                break
-                                case 7 : playableCard.playability = 11
-                                break 
+                            switch (playableCard.uniqueValue % 13) {
+
+                                case 12: playableCard.playability = 1
+                                    break
+                                case 11: playableCard.playability = 2
+                                    break
+                                case 10: playableCard.playability = 3
+                                    break
+                                case 2: playableCard.playability = 4
+                                    break
+                                case 3: playableCard.playability = 5
+                                    break
+                                case 4: playableCard.playability = 6
+                                    break
+                                case 9: playableCard.playability = 7
+                                    break
+                                case 5: playableCard.playability = 8
+                                    break
+                                case 6: playableCard.playability = 9
+                                    break
+                                case 8: playableCard.playability = 10
+                                    break
+                                case 7: playableCard.playability = 11
+                                    break
 
                             }
                         })
@@ -98,33 +96,33 @@ export const store = new Vuex.Store({
                         playableCards.forEach((card) => {
                             console.log(card.playability)
                         })
-                        
+
                         card = playableCards[0]
                     }
 
-                   
-                        if (card != null) {
-                            this.dispatch('slideAwayCard', { card, player } )
-                            // this.commit('placeCard', { card, player })
 
-                        } else {
-                            this.commit('getBoxFromOtherPlayer', player)
-                            this.commit('switchTurn')
-                        }
-                    
+                    if (card != null) {
+                        this.dispatch('slideAwayCard', { card, player })
+                        // this.commit('placeCard', { card, player })
 
-                }, 2500 / this.state.speed)
+                    } else {
+                        this.commit('getBoxFromOtherPlayer', player)
+                        this.commit('switchTurn')
+                    }
+
+
+                }, 1000 / this.state.speed)
             } else {
                 this.commit('switchTurn')
             }
 
         },
 
-        slideAwayCard(context, { card, player }){
-            if(card.isPlayable){
+        slideAwayCard(context, { card, player }) {
+            if (card.isPlayable) {
                 card.slideEffectOn = true
             }
-            
+
             setTimeout(() => {
                 this.commit('placeCard', { card, player })
             }, 500)
@@ -198,6 +196,12 @@ export const store = new Vuex.Store({
             }
         },
 
+        createPlayers(state) {
+            for (let i = 0; i < state.numberOfOpponents; i++) {
+                state.players.push({ name: `player${i + 2}`, cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 })
+            }
+        },
+
         getBoxFromOtherPlayer(state, player) {
             for (let i = 0; i < state.players.length; i++) {
                 state.players[i].hasTheBox = false
@@ -243,7 +247,7 @@ export const store = new Vuex.Store({
             if (state.playersTurn !== 1) {
                 this.commit('checkIfPlayerAbleToPlay')
             }
-
+            state.round++
 
         },
 
@@ -264,7 +268,7 @@ export const store = new Vuex.Store({
 
         switchTurn(state) {
 
-            state.round++
+            
             state.playersTurn++
             console.log('Spelare' + state.playersTurn + 's tur')
 
@@ -322,18 +326,18 @@ export const store = new Vuex.Store({
             state.playedCardsArray = []
             state.playedCards =
                 [
-                    { name: 's7', card: '♠' },
-                    { name: 'h7', card: '♥' },
-                    { name: 'k7', card: '♣' },
-                    { name: 'r7', card: '♦' },
-                    { name: 's8', card: '' },
-                    { name: 'h8', card: '' },
-                    { name: 'k8', card: '' },
-                    { name: 'r8', card: '' },
-                    { name: 's6', card: '' },
-                    { name: 'h6', card: '' },
-                    { name: 'k6', card: '' },
-                    { name: 'r6', card: '' }
+                    { name: 'S8', card: '' },
+                    { name: 'H8', card: '' },
+                    { name: 'K8', card: '' },
+                    { name: 'R8', card: '' },
+                    { name: 'S7', card: '♠' },
+                    { name: 'H7', card: '♥' },
+                    { name: 'K7', card: '♣' },
+                    { name: 'R7', card: '♦' },
+                    { name: 'S6', card: '' },
+                    { name: 'H6', card: '' },
+                    { name: 'K6', card: '' },
+                    { name: 'R6', card: '' }
                 ]
             for (let i = 0; i < state.players.length; i++) {
                 state.players[i].roundScore = 0
@@ -358,13 +362,13 @@ export const store = new Vuex.Store({
                     state.playedCardsArray.push(card)
 
                     switch (card.suit) {
-                        case '♥': state.playedCards[1].card = card
+                        case '♥': state.playedCards[5].card = card
                             break
-                        case '♠': state.playedCards[0].card = card
+                        case '♠': state.playedCards[4].card = card
                             break
-                        case '♦': state.playedCards[3].card = card
+                        case '♦': state.playedCards[7].card = card
                             break
-                        case '♣': state.playedCards[2].card = card
+                        case '♣': state.playedCards[6].card = card
                             break
                     }
                     player.cards.splice(player.cards.map(function (x) { return x.uniqueValue }).indexOf(card.uniqueValue), 1)
@@ -408,13 +412,13 @@ export const store = new Vuex.Store({
 
                     state.playedCardsArray.push(card)
                     switch (card.suit) {
-                        case '♥': state.playedCards[5].card = card
+                        case '♥': state.playedCards[1].card = card
                             break
-                        case '♠': state.playedCards[4].card = card
+                        case '♠': state.playedCards[0].card = card
                             break
-                        case '♦': state.playedCards[7].card = card
+                        case '♦': state.playedCards[3].card = card
                             break
-                        case '♣': state.playedCards[6].card = card
+                        case '♣': state.playedCards[2].card = card
                             break
                     }
                     player.cards.splice(player.cards.map(function (x) { return x.uniqueValue }).indexOf(card.uniqueValue), 1)
@@ -438,7 +442,7 @@ export const store = new Vuex.Store({
             else if (card.uniqueValue === 7) {
                 state.playedCardsArray.push(card)
                 player.cards.splice(player.cards.map(function (x) { return x.uniqueValue }).indexOf(card.uniqueValue), 1)
-                state.playedCards[1].card = card
+                state.playedCards[5].card = card
                 this.commit('switchTurn')
             }
             this.dispatch('switchPlayableStatus', card)

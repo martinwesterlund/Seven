@@ -1,36 +1,44 @@
 <template>
   <div id="app">
-    <Game />
-    <Scoreboard />
-    <Settings />
+    <Start />
+    <!-- <Navbar /> -->
+    <!-- <Game /> -->
+    <!-- <Scoreboard /> -->
+    <!-- <Settings /> -->
   </div>
 </template>
 
 <script>
-import Game from "./components/Game.vue";
-import Scoreboard from "./components/Scoreboard.vue";
-import Settings from "./components/Settings.vue";
+// import Navbar from "./components/Navbar.vue"
+// import Game from "./components/Game.vue"
+// import Scoreboard from "./components/Scoreboard.vue"
+// import Settings from "./components/Settings.vue"
+import Start from "./components/Start.vue"
 
 export default {
   components: {
-    Game,
-    Scoreboard,
-    Settings
+    // Navbar,
+    // Game
+    // Scoreboard,
+    // Settings
+    Start
   },
   created() {
-    this.$store.commit("createDeck");
+    this.$store.commit('createDeck');
+    this.$store.commit('createPlayers')
   },
   name: "app"
 };
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #006e09;
+    
 }
+
 </style>
