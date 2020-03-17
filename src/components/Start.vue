@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="wrapper">
-      <div id="bg"></div>
       <div class="logo1">
         <div id="logo">
           <span id="s">S</span>
@@ -14,21 +13,30 @@
       <div id="logo-text-wrapper">
         <div id="logo-text">- med Westerlundska regler</div>
       </div>
-      <div id="about1">
-        <button id="about">Om spelet</button>
-      </div>
-      <div id="rules1">
-        <button id="rules">Regler</button>
-      </div>
-      <div id="start1">
-        <button id="start">START</button>
-      </div>
+      <router-link to="/about">
+        <div id="about1">
+          <button id="about">Om spelet</button>
+        </div>
+      </router-link>
+      <router-link to="/Rules">
+        <div id="rules1">
+          <button id="rules">Regler</button>
+        </div>
+      </router-link>
+      <router-link to="/Game">
+        <div id="start1">
+          <button id="start">SPELA!</button>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {},
+  methods: {}
+};
 </script>
 
 <style>
@@ -44,21 +52,6 @@ export default {};
   font-family: "Slackey", cursive;
 }
 
-#bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/cards.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -5;
-  opacity: 0.1;
-
-  animation: bg 5s ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate-reverse;
-  overflow: hidden;
-}
 #logo {
   font-size: 100px;
   text-shadow: 0 0 10px #000;
@@ -94,28 +87,28 @@ export default {};
   animation-direction: alternate;
 }
 
-#about1{
-    opacity: 0;
-    animation: fade-in 1s ease-in;
-    animation-delay: 1.3s;
-    animation-fill-mode: forwards;
+#about1 {
+  opacity: 0;
+  animation: fade-in 1s ease-in;
+  animation-delay: 1.3s;
+  animation-fill-mode: forwards;
 }
 
-#rules1{
-    opacity: 0;
-    animation: fade-in 1s ease-in;
-    animation-delay: 1.6s;
-    animation-fill-mode: forwards;
+#rules1 {
+  opacity: 0;
+  animation: fade-in 1s ease-in;
+  animation-delay: 1.6s;
+  animation-fill-mode: forwards;
 }
 
-#start1{
-    opacity: 0;
-    animation: fade-in 1s ease-in;
-    animation-delay: 1.9s;
-    animation-fill-mode: forwards;
+#start1 {
+  opacity: 0;
+  animation: fade-in 1s ease-in;
+  animation-delay: 1.9s;
+  animation-fill-mode: forwards;
 }
 
-#rules{
+#rules {
   background-color: transparent;
   border: none;
   outline: none;
@@ -128,6 +121,7 @@ export default {};
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-delay: 0.3s;
+  cursor: pointer;
 }
 #about {
   background-color: transparent;
@@ -141,7 +135,7 @@ export default {};
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
-  
+  cursor: pointer;
 }
 #start {
   background-color: transparent;
@@ -154,13 +148,13 @@ export default {};
   font-size: 40px;
   animation: glow 0.7s ease-in-out infinite alternate;
   animation-delay: 0.6s;
+  cursor: pointer;
 }
-
 
 @keyframes fade-in {
   from {
     opacity: 0;
-    
+
     transform: translateY(-20px);
   }
   to {
@@ -171,22 +165,22 @@ export default {};
 
 @keyframes logo {
   0% {
-    transform: translateX(-100vh);
+    transform: translateY(-100vh);
   }
 
   60% {
     transform: scaleX(1) scaleY(1) translateX(0px);
-    transform-origin: right center;
+    transform-origin: bottom center;
   }
 
   80% {
-    transform: scaleX(0.5) scaleY(1.7) translateX(0px);
-    transform-origin: right center;
+    transform: scaleX(1.1) scaleY(0.7) translateX(0px);
+    transform-origin: bottom center;
   }
 
   100% {
     transform: scaleX(1) scaleY(1) translateX(0px);
-    transform-origin: right center;
+    transform-origin: bottom center;
   }
 }
 

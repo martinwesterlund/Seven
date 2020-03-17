@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <Start />
+    <div id="bg"></div>
+    <!-- <Start /> -->
     <!-- <Navbar /> -->
     <!-- <Game /> -->
     <!-- <Scoreboard /> -->
     <!-- <Settings /> -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,7 +15,7 @@
 // import Game from "./components/Game.vue"
 // import Scoreboard from "./components/Scoreboard.vue"
 // import Settings from "./components/Settings.vue"
-import Start from "./components/Start.vue"
+// import Start from "./components/Start.vue"
 
 export default {
   components: {
@@ -21,7 +23,7 @@ export default {
     // Game
     // Scoreboard,
     // Settings
-    Start
+    // Start
   },
   created() {
     this.$store.commit('createDeck');
@@ -39,6 +41,16 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #006e09;
     
+}
+#bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/cards.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -5;
+  opacity: 0.1;
 }
 
 </style>
