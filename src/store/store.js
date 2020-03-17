@@ -47,11 +47,6 @@ export const store = new Vuex.Store({
 
                 setTimeout(() => {
                     let card = null
-
-
-
-
-
                     let aces = player.cards.filter(playerCard => playerCard.value === 'A' && playerCard.isPlayable)
                     let kings = player.cards.filter(playerCard => playerCard.value === 'K' && playerCard.isPlayable)
                     let playableCards = player.cards.filter(playerCard => playerCard.isPlayable === true)
@@ -128,19 +123,11 @@ export const store = new Vuex.Store({
             }, 500)
         },
 
-
-
-
-
-
-
         switchPlayableStatus(context, card) {
             setTimeout(() => {
                 card.isPlayable = false
             }, 300)
         }
-
-
     },
 
     mutations: {
@@ -174,9 +161,8 @@ export const store = new Vuex.Store({
                 state.players[i].totalScore += state.players[i].roundScore
                 console.log(state.players[i].name + ' fick ' + state.players[i].roundScore + ' och totalpoängen är ' + state.players[i].totalScore)
             }
-
-
         },
+
         createDeck(state) {
             state.deck = []
             const suits = ['♥', '♠', '♦', '♣']
@@ -263,12 +249,9 @@ export const store = new Vuex.Store({
                     player.cards[i].isPlayable = true
                 }
             }
-
         },
 
         switchTurn(state) {
-
-            
             state.playersTurn++
             console.log('Spelare' + state.playersTurn + 's tur')
 
@@ -281,10 +264,6 @@ export const store = new Vuex.Store({
                 console.log('Skickar vidare till checkIfAbleToPlay')
                 this.commit('checkIfPlayerAbleToPlay')
             }
-
-
-
-
         },
 
         // Switch status to true if card is playable
@@ -309,13 +288,7 @@ export const store = new Vuex.Store({
                 console.log('Har nu kontrollerat spelarens kort, som verkar tillhöra en dator')
                 this.dispatch('computersTurn', state.players[state.playersTurn - 1])
             }
-
-
         },
-
-        // pushWinnerToScoreBoard(state, player){
-
-        // },
 
         newRound(state) {
             state.round = 0
@@ -344,21 +317,15 @@ export const store = new Vuex.Store({
                 state.players[i].hasTheBox = false
                 state.players[i].cards = []
                 state.players[i].type = 'cpu'
-
             }
             state.players[0].type = 'human'
             this.commit('createDeck')
-
         },
 
         placeCard(state, { card, player }) {
-
             console.log(player.name + ' lägger ' + card.suit + card.value)
             if (state.round > 0) {
-
-
                 if ((card.uniqueValue + 6) % 13 === 0) {
-
                     state.playedCardsArray.push(card)
 
                     switch (card.suit) {
@@ -431,12 +398,7 @@ export const store = new Vuex.Store({
                     else {
                         this.commit('switchTurn')
                     }
-
                 }
-
-
-
-
             }
 
             else if (card.uniqueValue === 7) {
@@ -446,7 +408,6 @@ export const store = new Vuex.Store({
                 this.commit('switchTurn')
             }
             this.dispatch('switchPlayableStatus', card)
-
         },
 
         roundOver(state) {
@@ -454,20 +415,5 @@ export const store = new Vuex.Store({
             this.commit('calcScore')
             state.roundOver = true
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     },
-
-
 })
