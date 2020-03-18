@@ -1,5 +1,9 @@
 <template>
   <div>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <div id="game-area">
       <div id="game-field">
         <div
@@ -12,14 +16,17 @@
             v-if="playedCard.card.suit != undefined"
             class="played-card"
             :class="[{ fadeInCard: playedCard.card.isPlayable }, {unknownCard: ((playedCard.card.uniqueValue + 12) % 13 === 0) || (playedCard.card.uniqueValue % 13) === 0}]"
-          ><div v-show="(playedCard.card.value !== 'A' && playedCard.card.value !=='K')">{{playedCard.card.suit + ' ' + playedCard.card.value}}</div></div>
+          >
+            <div
+              v-show="(playedCard.card.value !== 'A' && playedCard.card.value !=='K')"
+            >{{playedCard.card.suit + ' ' + playedCard.card.value}}</div>
+          </div>
           <div v-else class="no-played-card">{{playedCard.card}}</div>
         </div>
       </div>
 
       <div id="players-area">
         <div
-          
           class="cpu"
           v-for="player in cpus"
           :key="player.name"
@@ -27,7 +34,7 @@
         >
           <div class="box">
             <div v-if="state.round > 0">{{ player.name }}</div>
-            <span class='the-box' v-show="player.hasTheBox">&#x2620;</span>
+            <span class="the-box" v-show="player.hasTheBox">&#x2620;</span>
           </div>
           <div class="card-area">
             <div
@@ -44,13 +51,18 @@
         </div>
 
         <div
-        v-if="state.round > 0"
+          v-if="state.round > 0"
           id="player"
           :class="{ myTurn: 'player'+ state.playersTurn === state.players[0].name}"
         >
           <div class="box">
-            <div>{{state.players[0].name}} 
-            <span class='the-box' v-show="state.players[0].hasTheBox">&#x2620;</span></div>
+            <div>
+              {{state.players[0].name}}
+              <span
+                class="the-box"
+                v-show="state.players[0].hasTheBox"
+              >&#x2620;</span>
+            </div>
           </div>
           <div class="card-area">
             <div
@@ -61,7 +73,10 @@
               :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
               :class="[{playable : card.isPlayable}, {cpu : state.players[0].type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
             >
-              <div class="inner-card">{{card.suit + ' ' + card.value}}</div>
+              <div class="inner-card">
+                <div>{{card.suit}}</div>
+                <div>{{card.value}}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -71,8 +86,14 @@
     <div id="btn-bar">
       <button v-if="!state.roundOver && state.round === 0" @click="startGame()">Dela ut kort</button>
       <button v-if="state.ableToPlay == false && state.playersTurn === 1" @click="pass()">Pass!</button>
-      <button v-if="state.roundOver" @click="newRound()">Ny rond! </button>
+      <button v-if="state.roundOver" @click="newRound()">Ny rond!</button>
     </div>
+    <footer id="footer">
+      <div id="footer-bg"></div>
+      <router-link to="/"><i class="fa fa-home"></i></router-link>
+      <router-link to="/scoreboard"><i class="fa fa-trophy"></i></router-link>
+      <router-link to="/settings"><i class="fa fa-gears"></i></router-link>
+    </footer>
   </div>
 </template>
 
@@ -113,31 +134,36 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$card-color: #323136;
+$playable-card: #a2ff95;
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  
 }
 
-#btn-bar{
-  width: 100%;
-  margin: 0;
-  display:flex;
+#btn-bar {
+  width: 100vw;
+  display: flex;
   justify-content: center;
-  position: fixed;
-  bottom: 5%;
 }
 
 button {
-  padding: 5vw 20vw;
-  border-radius: 20px;
-  background-color: #30ee0a;
-  color: #000;
+  background-color: transparent;
   border: none;
   outline: none;
-
+  color: #fff;
+  text-shadow: 0 0 10px #000;
+  // padding: 10px;
+  font-family: "Slackey", cursive;
+  font-size: 30px;
+  animation: button 0.7s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0.3s;
+  cursor: pointer;
 }
 #game-area {
   display: flex;
@@ -148,23 +174,22 @@ button {
 #game-field {
   width: 95%;
 
-  margin: 2vh auto;
+  margin: 2vh auto 1vh;
   display: grid;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "S8-K H8-K K8-K R8-K" "S7 H7 K7 R7" "S6-E H6-E K6-E R6-E";
 }
 
-#game-field :nth-child(5){
+#game-field :nth-child(5) {
   transform: rotate(-90deg);
 }
-#game-field :nth-child(6){
+#game-field :nth-child(6) {
   transform: rotate(-90deg);
 }
-#game-field :nth-child(7){
+#game-field :nth-child(7) {
   transform: rotate(-90deg);
 }
-#game-field :nth-child(8){
+#game-field :nth-child(8) {
   transform: rotate(-90deg);
 }
 .played-card,
@@ -193,7 +218,6 @@ button {
 }
 
 #players-area {
-  
   width: 95%;
   margin: 5px auto;
   padding: 0;
@@ -209,11 +233,13 @@ button {
   font-size: 14px;
 }
 
-.the-box{
+.the-box {
   font-weight: bold;
   color: #000;
   margin-left: 5px;
-   /* text-shadow: 1px 1px #000; */
+  font-size: 14px;
+  text-shadow: 0 0 4px #fff;
+  /* text-shadow: 1px 1px #000; */
 }
 .cpu {
   display: flex;
@@ -225,10 +251,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
   width: 5vw;
   height: 10vw;
-  margin: 1px;
+  margin: 2px;
   background-color: #fff;
   opacity: 1;
   pointer-events: none;
@@ -245,12 +270,11 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
-  width: 5vw;
+  /* border: 1px solid red; */
+  width: 8vw;
   height: 10vw;
-  margin: 1px;
+  margin: 3px;
   background-color: #fff;
-  
 }
 
 /* .card:active{
@@ -259,14 +283,14 @@ button {
 } */
 
 .card-area {
-  height: 11vw; 
+  height: 10vw;
   display: flex;
   justify-content: center;
   align-items: center;
   /* pointer-events: none; */
 }
 
-.myTurn{
+.myTurn {
   pointer-events: all;
   opacity: 1 !important;
 }
@@ -278,7 +302,6 @@ button {
 
 .card:active {
   transform: scale(2) translateY(-20px);
-
 }
 
 /* #player .card-area{
@@ -298,15 +321,14 @@ button {
 .unknownCard {
   /* width: 100px;
   min-height: 150px; */
-  
+
   border: 1px solid black;
   /* opacity: 1; */
-  background-color: lightblue !important;
+  background-color: $card-color !important;
   animation-name: flipCard;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
-  color: lightblue;
-  
+  /* color: $card-color; */
 }
 
 /* .card {
@@ -329,7 +351,7 @@ button {
 } */
 
 .playable {
-  background-color: #cdffcd !important;
+  background-color: $playable-card !important;
   /* animation-name: playable;
   animation-duration: 0.5s;
   animation-direction: alternate-reverse;
@@ -343,8 +365,8 @@ button {
 }
 
 .cpu .card {
-  /* color: lightblue !important; */
-  background-color: lightblue !important;
+  /* color: $card-color !important; */
+  background-color: $card-color !important;
 }
 
 #s7 {
@@ -398,9 +420,49 @@ button {
   grid-area: K6-E;
 }
 
+#footer {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0%;
+  opacity: 0;
+  animation-name: footer-fade;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+}
+
+#footer-bg {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  background-color: #003a00;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+i {
+  color: #fff;
+  font-size: 30px;
+  opacity: 1;
+}
+
 .fadeInCard {
   animation-name: fadeIn;
   animation-duration: 0.5s;
+}
+
+@keyframes footer-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
@@ -415,13 +477,9 @@ button {
 @keyframes flipCard {
   from {
     transform: rotate(-5deg) rotateY(0deg);
-    
-    
   }
   to {
     transform: rotate(5deg) rotateY(180deg);
-    
-    
   }
 }
 @keyframes playable {
@@ -444,7 +502,18 @@ button {
   100% {
     opacity: 0;
     transform: translateY(-50vh) scale(1) rotate(360deg);
-    
+  }
+}
+
+@keyframes button {
+  0% {
+    transform: scaleX(1) scaleY(1.05);
+  }
+  50% {
+    transform: scaleX(1.025);
+  }
+  100% {
+    transform: scaleX(1.05) scaleY(1);
   }
 }
 </style>

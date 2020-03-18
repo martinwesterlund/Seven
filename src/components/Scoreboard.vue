@@ -1,11 +1,15 @@
 <template>
   <div>
-    <ol>
+    <div id="wrapper">
+      <h1>Ställning</h1>
+      <ol>
       <li
         v-for="player in orderedPlayers"
         :key="player.name"
       >{{ player.name }} {{player.totalScore}}</li>
     </ol>
+    </div>
+    
   </div>
 </template>
 
@@ -27,8 +31,17 @@ export default {
 </script>
 
 <style>
-body {
-    width: 200px;
-    
+#wrapper {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0 0 10px #000;
 }
 </style>

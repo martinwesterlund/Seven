@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
     state: {
         ableToPlay: null,
         deck: [],
-        numberOfOpponents: 2,
+        numberOfOpponents: 4,
         scoreBoard: [],
         speed: 5,
         playedCardsArray: [],
@@ -138,9 +138,6 @@ export const store = new Vuex.Store({
                     switch (state.players[i].cards[j].value) {
                         case 'A':
                             state.players[i].roundScore += 15
-                            break
-                        case '10':
-                            state.players[i].roundScore += 10
                             break
                         case 'J':
                             state.players[i].roundScore += 10

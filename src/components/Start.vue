@@ -39,17 +39,17 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css?family=Fredoka+One&display=swap");
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Slackey&display=swap");
 #wrapper {
+  
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Slackey", cursive;
+  
 }
 
 #logo {
@@ -75,6 +75,7 @@ export default {
   opacity: 0;
   animation: fade-in 1s ease-in;
   animation-delay: 1s;
+  
   animation-fill-mode: forwards;
 }
 #logo-text {
