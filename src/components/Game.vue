@@ -33,7 +33,7 @@
           :class="{ myTurn: 'player'+ state.playersTurn === player.name}"
         >
           <div class="box">
-            <div v-if="state.round > 0">{{ player.name }}</div>
+            <div v-if="state.round > 0">{{ player.alias }}</div>
             <span class="the-box" v-show="player.hasTheBox">&#x2620;</span>
           </div>
           <div class="card-area">
@@ -43,7 +43,7 @@
               v-for="card in player.cards"
               :key="card.index"
               :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
-              :class="[{playable : card.isPlayable}, {cpu : player.type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
+              :class="[{playable : card.isPlayable && state.helpOn}, {cpu : player.type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
             >
               <div class="inner-card"></div>
             </div>
@@ -57,7 +57,7 @@
         >
           <div class="box">
             <div>
-              {{state.players[0].name}}
+              {{state.players[0].alias}}
               <span
                 class="the-box"
                 v-show="state.players[0].hasTheBox"
@@ -71,7 +71,7 @@
               v-for="card in state.players[0].cards"
               :key="card.index"
               :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
-              :class="[{playable : card.isPlayable}, {cpu : state.players[0].type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
+              :class="[{playable : card.isPlayable && state.helpOn}, {cpu : state.players[0].type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
             >
               <div class="inner-card">
                 <div>{{card.suit}}</div>

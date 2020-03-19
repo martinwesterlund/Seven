@@ -7,7 +7,7 @@
       <div id='slider-info'>
         <span>Av</span>
         <label class="switch">
-          <input type="checkbox" checked />
+          <input id='switchValue' v-model='state.helpOn' type="checkbox">
           <span class="slider round"></span>
         </label>
         <span>På</span>
@@ -66,6 +66,7 @@ export default {
   height: 34px;
   margin: 0 20px;
 }
+
 
 .switch input {
   opacity: 0;

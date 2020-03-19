@@ -7,7 +7,9 @@ export const store = new Vuex.Store({
 
     state: {
         ableToPlay: null,
+        computerNames: ['Bodil', 'Mats', 'Anton', 'Martin'],
         deck: [],
+        helpOn: false,
         numberOfOpponents: 4,
         scoreBoard: [],
         speed: 5,
@@ -27,7 +29,7 @@ export const store = new Vuex.Store({
             { name: 'R6', card: '' }
         ],
         players: [
-            { name: 'player1', cards: [], type: 'human', hasTheBox: false, roundScore: 0, totalScore: 0 },
+            { alias: 'Du', name: 'player1', cards: [], type: 'human', hasTheBox: false, roundScore: 0, totalScore: 0 },
 
         ],
         playersTurn: null,
@@ -181,7 +183,7 @@ export const store = new Vuex.Store({
 
         createPlayers(state) {
             for (let i = 0; i < state.numberOfOpponents; i++) {
-                state.players.push({ name: `player${i + 2}`, cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 })
+                state.players.push({ alias: state.computerNames[i], name: `player${i + 2}`, cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 })
             }
         },
 

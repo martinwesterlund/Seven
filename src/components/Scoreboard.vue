@@ -6,7 +6,7 @@
       <li
         v-for="player in orderedPlayers"
         :key="player.name"
-      >{{ player.name }} {{player.totalScore}}</li>
+      >{{ player.alias }} : {{player.totalScore}}</li>
     </ol>
     </div>
     
