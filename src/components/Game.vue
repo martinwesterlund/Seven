@@ -470,7 +470,7 @@ i {
     background-color: black;
   }
   to {
-    background-color: white;
+    background-color: #fff;
   }
 }
 

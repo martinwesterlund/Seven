@@ -6,6 +6,7 @@
       <li
         v-for="player in orderedPlayers"
         :key="player.name"
+        :class="{you : player.name === 'player1'}"
       >{{ player.alias }} : {{player.totalScore}}</li>
     </ol>
     </div>
@@ -30,7 +31,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #wrapper {
   margin: 0;
   padding: 0;
@@ -44,4 +45,9 @@ export default {
   font-size: 18px;
   text-shadow: 0 0 10px #000;
 }
+
+.you{
+  color: yellow;
+}
+
 </style>
