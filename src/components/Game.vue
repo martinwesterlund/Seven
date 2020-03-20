@@ -88,17 +88,17 @@
       <button v-if="state.ableToPlay == false && state.playersTurn === 1" @click="pass()">Pass!</button>
       <button v-if="state.roundOver" @click="newRound()">Ny rond!</button>
     </div>
-    <footer id="footer">
-      <div id="footer-bg"></div>
-      <router-link to="/"><i class="fa fa-home"></i></router-link>
-      <router-link to="/scoreboard"><i class="fa fa-trophy"></i></router-link>
-      <router-link to="/settings"><i class="fa fa-gears"></i></router-link>
-    </footer>
+    
+    
   </div>
 </template>
 
 <script>
+// import FooterBar from "./FooterBar.vue";
 export default {
+  components: {
+    
+  },
   computed: {
     state() {
       return this.$store.state;
@@ -420,36 +420,36 @@ button {
   grid-area: K6-E;
 }
 
-#footer {
-  width: 100%;
-  height: 50px;
-  margin: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
-  bottom: 0%;
-  opacity: 0;
-  animation-name: footer-fade;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
-  animation-delay: 1s;
-}
+// #footer {
+//   width: 100%;
+//   height: 50px;
+//   margin: 0;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   position: fixed;
+//   bottom: 0%;
+//   opacity: 0;
+//   animation-name: footer-fade;
+//   animation-duration: 2s;
+//   animation-fill-mode: forwards;
+//   animation-delay: 1s;
+// }
 
-#footer-bg {
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  background-color: #003a00;
-  opacity: 0.6;
-  z-index: -1;
-}
+// #footer-bg {
+//   width: 100%;
+//   height: 50px;
+//   position: fixed;
+//   background-color: #003a00;
+//   opacity: 0.6;
+//   z-index: -1;
+// }
 
-i {
-  color: #fff;
-  font-size: 30px;
-  opacity: 1;
-}
+// i {
+//   color: #fff;
+//   font-size: 30px;
+//   opacity: 1;
+// }
 
 .fadeInCard {
   animation-name: fadeIn;

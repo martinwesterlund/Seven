@@ -28,17 +28,26 @@
         <br />
         <br />
         <br />
+        
         <br />
       </p>
+      
     </div>
+    <!-- <FooterBar></FooterBar> -->
   </div>
 </template>
 
 <script>
-export default {};
+// import FooterBar from "./FooterBar.vue";
+export default {
+  components: {
+    // FooterBar
+  }
+};
 </script>
 
 <style scoped>
+
 #rules-wrapper {
   margin: 0;
   padding: 0;

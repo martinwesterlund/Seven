@@ -47,7 +47,7 @@ export default {
 }
 
 .you{
-  color: yellow;
+  color: #cec107;
 }
 
 </style>

@@ -9,8 +9,9 @@ export const store = new Vuex.Store({
         ableToPlay: null,
         computerNames: ['Bodil', 'Mats', 'Anton', 'Martin'],
         deck: [],
+        endScore: 500,
         helpOn: false,
-        numberOfOpponents: 4,
+        numberOfOpponents: 3,
         scoreBoard: [],
         speed: 5,
         playedCardsArray: [],
@@ -28,17 +29,24 @@ export const store = new Vuex.Store({
             { name: 'K6', card: '' },
             { name: 'R6', card: '' }
         ],
-        players: [
-            { alias: 'Du', name: 'player1', cards: [], type: 'human', hasTheBox: false, roundScore: 0, totalScore: 0 },
-
-        ],
+        players: [],
         playersTurn: null,
         round: 0,
         roundOver: false,
-        vueSliderOptions: {
+        speedOptions: {
             interval: 1,
             min: 1,
             max: 5
+        },
+        opponentsOptions: {
+            interval: 1,
+            min: 2,
+            max: 4
+        },
+        endScoreOptions: {
+            interval: 50,
+            min: 100,
+            max: 1000
         }
     },
 
@@ -182,6 +190,9 @@ export const store = new Vuex.Store({
         },
 
         createPlayers(state) {
+            state.players = [
+                { alias: 'Du', name: 'player1', cards: [], type: 'human', hasTheBox: false, roundScore: 0, totalScore: 0 },
+            ]
             for (let i = 0; i < state.numberOfOpponents; i++) {
                 state.players.push({ alias: state.computerNames[i], name: `player${i + 2}`, cards: [], type: 'cpu', hasTheBox: false, roundScore: 0, totalScore: 0 })
             }
@@ -249,6 +260,7 @@ export const store = new Vuex.Store({
                 }
             }
         },
+
 
         switchTurn(state) {
             state.playersTurn++

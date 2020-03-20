@@ -18,14 +18,14 @@
           <button id="about">Om spelet</button>
         </div>
       </router-link>
-      <router-link to="/Rules">
-        <div id="rules1">
-          <button id="rules">Regler</button>
+      <router-link to="/setup">
+        <div id="setup1">
+          <button id="setup">Spelinställningar</button>
         </div>
       </router-link>
-      <router-link to="/Game">
+      <router-link to="/game">
         <div id="start1">
-          <button id="start">SPELA!</button>
+          <button id="start" >SPELA!</button>
         </div>
       </router-link>
     </div>
@@ -34,28 +34,31 @@
 
 <script>
 export default {
-  computed: {},
-  methods: {}
-};
+  methods: {
+    showFooter() {
+      this.$store.commit("showFooter");
+    }
+  }
+}
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Slackey&display=swap");
+
 #wrapper {
-  
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
 
 #logo {
-  font-size: 100px;
+  margin-right: 15px;
+  font-size: 90px;
   text-shadow: 0 0 10px #000;
-
+  text-align: center;
   color: #fff;
   letter-spacing: -15px;
   animation: logo 2s linear;
@@ -66,7 +69,8 @@ export default {
   transform: rotate(50deg);
 }
 .logo1 {
-  margin-top: 20vh;
+  width: 80%;
+  margin-top: 10vh;
   animation: logo-infinite 2s linear;
   animation-iteration-count: infinite;
   animation-direction: reverse;
@@ -75,14 +79,14 @@ export default {
   opacity: 0;
   animation: fade-in 1s ease-in;
   animation-delay: 1s;
-  
+
   animation-fill-mode: forwards;
 }
 #logo-text {
   color: #fff;
   font-size: 18px;
   text-shadow: 0 0 10px #000;
-  margin-bottom: 20vh;
+  margin-bottom: 10vh;
   animation: button 2s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -95,7 +99,7 @@ export default {
   animation-fill-mode: forwards;
 }
 
-#rules1 {
+#setup1 {
   opacity: 0;
   animation: fade-in 1s ease-in;
   animation-delay: 1.6s;
@@ -109,7 +113,7 @@ export default {
   animation-fill-mode: forwards;
 }
 
-#rules {
+#setup {
   background-color: transparent;
   border: none;
   outline: none;
@@ -117,7 +121,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 40px;
+  font-size: 30px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -132,7 +136,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 40px;
+  font-size: 30px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -146,7 +150,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 40px;
+  font-size: 30px;
   animation: glow 0.7s ease-in-out infinite alternate;
   animation-delay: 0.6s;
   cursor: pointer;

@@ -8,6 +8,8 @@ import Rules from './components/Rules.vue'
 import Game from './components/Game.vue'
 import Scoreboard from './components/Scoreboard.vue'
 import Settings from './components/Settings.vue'
+import Setup from './components/Setup.vue'
+import Warning from './components/Warning.vue'
 
 Vue.use(VueRouter)
 
@@ -18,6 +20,8 @@ const routes = [
   { path: '/game', component: Game },
   { path: '/scoreboard', component: Scoreboard },
   { path: '/settings', component: Settings },
+  { path: '/setup', component: Setup },
+  { path: '/warning', component: Warning }
   
 ];
 

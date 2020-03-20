@@ -1,22 +1,33 @@
 <template>
   <div>
-    <div id="about-wrapper">
-      <h1 id="header">Om spelet</h1>
-      <p>JavaScript-baserat kortspel, gjort av Martin Westerlund 2020. Tekniker som använts är bland annat JavaScript, Vue.js, Vuex och Vue Router.</p>
+    <div id="warning-wrapper">
+      <h1 id="header">?!?!?</h1>
+      <p>Är du säker på att du vill avsluta matchen?</p>
       <router-link to="/">
-        <button id="back">Tillbaka</button>
+        <button @click='resetGame' id="yes">Ja</button>
+      </router-link>
+      <router-link to="/game">
+        <button id="no">Nej</button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+    methods: {
+    resetGame(){
+      this.$store.commit('createPlayers')
+      this.$store.commit('newRound')
+
+    }
+  }
+};
 </script>
 
 <style scoped>
 
-#about-wrapper {
+#warning-wrapper {
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -30,13 +41,15 @@ export default {};
   text-shadow: 0 0 10px #000;
 }
 
+
+
 p{
   text-align: center;
   margin: 20px;
   margin-bottom: 15vh;
 }
 
-#back {
+#yes, #no {
   
   background-color: transparent;
   border: none;
@@ -50,6 +63,10 @@ p{
   animation-iteration-count: infinite;
   animation-direction: alternate;
   cursor: pointer;
+}
+
+#header{
+    color: #e60808;
 }
 
 @keyframes button {

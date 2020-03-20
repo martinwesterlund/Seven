@@ -1,14 +1,18 @@
 <template>
   <div id="app">
+    <FooterBar v-if="($route.path !== '/' && $route.path !== '/setup' && $route.path !== '/about')"></FooterBar>
     <div id="bg"></div>
     <transition name="slide" mode="out-in">
-      <router-view></router-view>
+      <router-view>
+        
+      </router-view>
     </transition>
+  
   </div>
 </template>
 
 <script>
-// import Navbar from "./components/Navbar.vue"
+import FooterBar from "./components/FooterBar.vue"
 // import Game from "./components/Game.vue"
 // import Scoreboard from "./components/Scoreboard.vue"
 // import Settings from "./components/Settings.vue"
@@ -21,6 +25,7 @@ export default {
     // Scoreboard,
     // Settings
     // Start
+    FooterBar
   },
   created() {
     this.$store.commit("createDeck");
@@ -60,7 +65,7 @@ body {
 .slide-enter,
 .slide-leave-to{
   opacity: 0;
-  transform: scale(1.5);
+  transform: translateX(-30%);
 }
 
 

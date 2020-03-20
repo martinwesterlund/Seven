@@ -2,8 +2,9 @@
   <div>
     <div id="settings-wrapper">
       <h1>Speltempo: {{ state.speed }}</h1>
-      <vue-slider id="slider" v-model="state.speed" v-bind="state.vueSliderOptions" />
+      <vue-slider id="slider" v-model="state.speed" v-bind="state.speedOptions" />
       <h1>Hjälpmedel</h1>
+      <h5>Visa spelbara kort</h5>
       <div id='slider-info'>
         <span>Av</span>
         <label class="switch">
@@ -56,7 +57,14 @@ export default {
 }
 
 #slider {
-  margin: 0 20%;
+  margin: 0px 20% 20px;
+}
+
+h1{
+  margin: 10px;
+}
+h5{
+  margin: 0 0 20px;
 }
 
 .switch {
