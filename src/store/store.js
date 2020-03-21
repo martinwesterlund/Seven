@@ -308,6 +308,7 @@ export const store = new Vuex.Store({
         },
 
         newRound(state) {
+            state.gameOver = false
             state.round = 0
             state.roundOver = false
             state.ableToPlay = null

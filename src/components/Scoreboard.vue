@@ -11,7 +11,7 @@
       >{{ player.alias }} : {{player.totalScore}}</li>
     </ol>
     <router-link to="/">
-        <button v-if= "state.gameOver" id="back">Spela igen</button>
+        <button @click="resetGame" v-if= "state.gameOver" id="back">Spela igen</button>
       </router-link>
     </div>
     
@@ -30,6 +30,12 @@ export default {
     orderedPlayers() {
       let sortedList = this.$store.state.players.slice()
       return sortedList.sort((a, b) => a.totalScore - b.totalScore);
+    }
+  },
+  methods: {
+    resetGame() {
+      this.$store.commit("createPlayers");
+      this.$store.commit("newRound");
     }
   }
 };
