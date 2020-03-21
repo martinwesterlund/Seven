@@ -3,9 +3,9 @@
     <div id="settings-wrapper">
       <h3>Antal motspelare: <span>{{state.numberOfOpponents}}</span></h3>
       <h3>Spelet slut vid: <span>{{state.endScore}}</span> p</h3>
-      <h1>Speltempo: <span>{{ state.speed }}</span></h1>
+      <h3>Speltempo: <span>{{ state.speed }}</span></h3>
       <vue-slider id="slider" v-model="state.speed" v-bind="state.speedOptions" />
-      <h1>Hjälpmedel</h1>
+      <h3>Hjälpmedel</h3>
       <h5>Visa spelbara kort</h5>
       <div id='slider-info'>
         <span :class="{notSelected : state.helpOn}">Av</span>

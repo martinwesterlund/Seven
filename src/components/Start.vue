@@ -56,7 +56,7 @@ export default {
 
 #logo {
   margin-right: 15px;
-  font-size: 25vw;
+  font-size: 23vw;
   text-shadow: 0 0 10px #000;
   text-align: center;
   color: #fff;
