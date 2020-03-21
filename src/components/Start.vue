@@ -25,7 +25,7 @@
       </router-link>
       <router-link to="/game">
         <div id="start1">
-          <button id="start" >SPELA!</button>
+          <button id="start" >SNABBSTART!</button>
         </div>
       </router-link>
     </div>

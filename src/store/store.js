@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
         computerNames: ['Bodil', 'Mats', 'Anton', 'Martin'],
         deck: [],
         endScore: 500,
+        gameOver : false,
         helpOn: false,
         numberOfOpponents: 3,
         scoreBoard: [],
@@ -116,7 +117,7 @@ export const store = new Vuex.Store({
                     }
 
 
-                }, 1000 / this.state.speed)
+                }, 3000 / this.state.speed)
             } else {
                 this.commit('switchTurn')
             }
@@ -168,6 +169,11 @@ export const store = new Vuex.Store({
                 state.players[i].totalScore += state.players[i].roundScore
                 console.log(state.players[i].name + ' fick ' + state.players[i].roundScore + ' och totalpoängen är ' + state.players[i].totalScore)
             }
+
+            if(state.players.find(p => p.totalScore >= state.endScore)){
+                state.gameOver = true
+            }
+            
         },
 
         createDeck(state) {

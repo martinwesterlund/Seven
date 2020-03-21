@@ -3,30 +3,30 @@
     <div id="warning-wrapper">
       <h1 id="header">?!?!?</h1>
       <p>Är du säker på att du vill avsluta matchen?</p>
-      <router-link to="/">
-        <button @click='resetGame' id="yes">Ja</button>
-      </router-link>
-      <router-link to="/game">
-        <button id="no">Nej</button>
-      </router-link>
+      <div id="answers">
+        <router-link to="/">
+          <button @click="resetGame" id="yes">Ja</button>
+        </router-link>
+        <router-link to="/game">
+          <button id="no">Nej</button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    methods: {
-    resetGame(){
-      this.$store.commit('createPlayers')
-      this.$store.commit('newRound')
-
+  methods: {
+    resetGame() {
+      this.$store.commit("createPlayers");
+      this.$store.commit("newRound");
     }
   }
 };
 </script>
 
 <style scoped>
-
 #warning-wrapper {
   margin: 0;
   padding: 0;
@@ -41,16 +41,21 @@ export default {
   text-shadow: 0 0 10px #000;
 }
 
-
-
-p{
+p {
   text-align: center;
   margin: 20px;
   margin-bottom: 15vh;
 }
 
-#yes, #no {
-  
+#answers{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#yes,
+#no {
   background-color: transparent;
   border: none;
   outline: none;
@@ -65,8 +70,8 @@ p{
   cursor: pointer;
 }
 
-#header{
-    color: #e60808;
+#header {
+  color: #e60808;
 }
 
 @keyframes button {

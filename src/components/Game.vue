@@ -90,7 +90,11 @@
     <div id="btn-bar">
       <button v-if="!state.roundOver && state.round === 0" @click="startGame()">Dela ut kort</button>
       <button v-if="state.ableToPlay == false && state.playersTurn === 1" @click="pass()">Pass!</button>
-      <button v-if="state.roundOver" @click="newRound()">Ny rond!</button>
+      <button v-if="state.roundOver && state.gameOver == false" @click="newRound()">Ny rond!</button>
+      <router-link to="/scoreboard">
+        <button v-if="state.gameOver">Spelet slut! Se vem som vann!</button>
+      </router-link>
+      
     </div>
     
     
@@ -149,9 +153,9 @@ body {
 }
 
 #btn-bar {
-  // position: absolute;
-  // bottom: 55px;
-  margin-top: 30px;
+  position: relative;
+  bottom: 10px;
+  margin-top: 20px;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -165,7 +169,7 @@ button {
   text-shadow: 0 0 10px #000;
   // padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 26px;
+  font-size: 20px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -179,7 +183,8 @@ button {
 }
 
 #game-field {
-  width: 95%;
+  width: 80%;
+  // width: 95%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   margin: 2vh auto 1vh;
@@ -205,8 +210,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 14vw;
-  height: 21vw;
+  width: 12vw;
+  height: 18vw;
   margin: 0vw 4vw;
   background-color: #fff;
   transform: rotate(-5deg);
@@ -330,7 +335,7 @@ button {
   justify-content: center;
   align-items: center;
   // margin-bottom: 5px;
-  /* pointer-events: none; */
+  // pointer-events: none; 
 }
 
 .myTurn {
@@ -352,9 +357,9 @@ button {
   background-color: #fff;
 }
 
-.card:active {
-  transform: scale(2) translateY(-20px);
-}
+// .card:active {
+//   transform: scale(2) translateY(-20px);
+// }
 
 /* #player .card-area{
   overflow-x: scroll;

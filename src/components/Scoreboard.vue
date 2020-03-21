@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="wrapper">
-      <h1>Ställning</h1>
+      <h1 v-if= "state.gameOver">Slutställning</h1>
+      <h1 v-else>Ställning</h1>
       <ol>
       <li
         v-for="player in orderedPlayers"
@@ -9,6 +10,9 @@
         :class="{you : player.name === 'player1'}"
       >{{ player.alias }} : {{player.totalScore}}</li>
     </ol>
+    <router-link to="/">
+        <button v-if= "state.gameOver" id="back">Spela igen</button>
+      </router-link>
     </div>
     
   </div>
@@ -17,9 +21,9 @@
 <script>
 export default {
   computed: {
-    // state() {
-    //   return this.$store.state;
-    // },
+    state() {
+      return this.$store.state;
+    },
     // players() {
     //   return this.$store.state.players;
     // },
@@ -48,6 +52,33 @@ export default {
 
 .you{
   color: #cec107;
+}
+
+#back {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  text-shadow: 0 0 10px #000;
+  padding: 10px;
+  font-family: "Slackey", cursive;
+  font-size: 30px;
+  animation: button 0.7s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  cursor: pointer;
+}
+
+@keyframes button {
+  0% {
+    transform: scaleX(1) scaleY(1.05);
+  }
+  50% {
+    transform: scaleX(1.025);
+  }
+  100% {
+    transform: scaleX(1.05) scaleY(1);
+  }
 }
 
 </style>
