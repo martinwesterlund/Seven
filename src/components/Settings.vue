@@ -1,17 +1,19 @@
 <template>
   <div>
     <div id="settings-wrapper">
-      <h1>Speltempo: {{ state.speed }}</h1>
+      <h3>Antal motspelare: <span>{{state.numberOfOpponents}}</span></h3>
+      <h3>Spelet slut vid: <span>{{state.endScore}}</span> p</h3>
+      <h1>Speltempo: <span>{{ state.speed }}</span></h1>
       <vue-slider id="slider" v-model="state.speed" v-bind="state.speedOptions" />
       <h1>Hjälpmedel</h1>
       <h5>Visa spelbara kort</h5>
       <div id='slider-info'>
-        <span>Av</span>
+        <span :class="{notSelected : state.helpOn}">Av</span>
         <label class="switch">
           <input id='switchValue' v-model='state.helpOn' type="checkbox">
           <span class="slider round"></span>
         </label>
-        <span>På</span>
+        <span :class="{notSelected : !state.helpOn}">På</span>
       </div>
 
       <link
@@ -67,6 +69,13 @@ h5{
   margin: 0 0 20px;
 }
 
+span{
+  color: #cec107;
+}
+
+.notSelected{
+  color: #fff;
+}
 .switch {
   position: relative;
   /* display: inline-block; */

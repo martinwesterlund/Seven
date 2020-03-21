@@ -37,7 +37,7 @@ export const store = new Vuex.Store({
         speedOptions: {
             interval: 1,
             min: 1,
-            max: 5
+            max: 10
         },
         opponentsOptions: {
             interval: 1,

@@ -91,6 +91,7 @@
       <button v-if="!state.roundOver && state.round === 0" @click="startGame()">Dela ut kort</button>
       <button v-if="state.ableToPlay == false && state.playersTurn === 1" @click="pass()">Pass!</button>
       <button v-if="state.roundOver && state.gameOver == false" @click="newRound()">Ny rond!</button>
+      <button>Hejsan</button>
       <router-link to="/scoreboard">
         <button v-if="state.gameOver">Spelet slut! Se vem som vann!</button>
       </router-link>
@@ -155,7 +156,7 @@ body {
 #btn-bar {
   position: relative;
   bottom: 10px;
-  margin-top: 20px;
+  margin-top: 4vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -306,7 +307,7 @@ button {
   align-items: center;
   border-radius: 2px;
   min-width: 3vw;
-  width: 7vw;
+  width: 8vw;
   height: 10vw;
   margin: 3px;
   background-color: #fff;
@@ -329,7 +330,7 @@ button {
 
 #player .card-area {
   width: 100%;
-  height: 10vw;
+  min-height: 10vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -56,7 +56,7 @@ export default {
 
 #logo {
   margin-right: 15px;
-  font-size: 90px;
+  font-size: 25vw;
   text-shadow: 0 0 10px #000;
   text-align: center;
   color: #fff;
@@ -84,7 +84,7 @@ export default {
 }
 #logo-text {
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   text-shadow: 0 0 10px #000;
   margin-bottom: 10vh;
   animation: button 2s linear;
@@ -121,7 +121,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 30px;
+  font-size: 25px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -136,7 +136,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 30px;
+  font-size: 25px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -150,7 +150,7 @@ export default {
   text-shadow: 0 0 10px #000;
   padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 30px;
+  font-size: 25px;
   animation: glow 0.7s ease-in-out infinite alternate;
   animation-delay: 0.6s;
   cursor: pointer;

@@ -1,24 +1,24 @@
 <template>
   <div>
     <div id="gamesetup-wrapper">
-      <h3>Antal motspelare: {{ state.numberOfOpponents }}</h3>
+      <h3>Antal motspelare: <span>{{state.numberOfOpponents}}</span></h3>
       <vue-slider id="slider1" v-model="state.numberOfOpponents" v-bind="state.opponentsOptions" />
-      <h3>Spelet slut när någon når upp till: {{ state.endScore }} p</h3>
+      <h3>Spelet slut vid: <span>{{state.endScore}}</span> p</h3>
       <vue-slider id="slider2" v-model="state.endScore" v-bind="state.endScoreOptions" />
-      <h3>Speltempo: {{ state.speed }}</h3>
+      <h3>Speltempo: <span>{{ state.speed }}</span></h3>
       <vue-slider id="slider" v-model="state.speed" v-bind="state.speedOptions" />
       <h3>Hjälpmedel</h3>
       <h5>Visa spelbara kort</h5>
-      <div id='slider-info'>
-        <span>Av</span>
+      <div id="slider-info">
+        <span :class="{notSelected : state.helpOn}">Av</span>
         <label class="switch">
-          <input id='switchValue' v-model='state.helpOn' type="checkbox">
+          <input id="switchValue" v-model="state.helpOn" type="checkbox" />
           <span class="slider round"></span>
         </label>
-        <span>På</span>
+        <span :class="{notSelected : !state.helpOn}">På</span>
       </div>
       <router-link to="/game">
-        <button id="ok" @click='resetGame'>SPELA!</button>
+        <button id="ok" @click="resetGame">SPELA!</button>
       </router-link>
       <link
         rel="stylesheet"
@@ -40,17 +40,15 @@ export default {
     }
   },
   methods: {
-    resetGame(){
-      this.$store.commit('createPlayers')
-      this.$store.commit('newRound')
-
+    resetGame() {
+      this.$store.commit("createPlayers");
+      this.$store.commit("newRound");
     }
   }
 };
 </script>
 
 <style scoped>
-
 #gamesetup-wrapper {
   padding: 0;
   width: 100vw;
@@ -70,16 +68,25 @@ export default {
   margin: 0 auto;
 }
 
-#slider, #slider1, #slider2 {
+#slider,
+#slider1,
+#slider2 {
   margin: 0px 20% 20px;
 }
-h3{
+h3 {
   margin-bottom: 10px;
 }
-h5{
+h5 {
   margin-top: 0;
 }
 
+span {
+  color: #cec107;
+}
+
+.notSelected {
+  color: #fff;
+}
 p {
   text-align: center;
   margin: 20px;
@@ -108,7 +115,6 @@ p {
   height: 34px;
   margin: 0 20px;
 }
-
 
 .switch input {
   opacity: 0;
