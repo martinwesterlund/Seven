@@ -18,10 +18,10 @@
         Spelaren som lägger det sista kortet i någon hög (ess eller kung) vänder den högen och får lägga ytterligare ett kort.
         <br />
         <br />
-        Kan man inte lägga ut något kort måste man passa och får då även asken (Asken - <span>&#x2620;</span>). 
+        Kan man inte lägga ut något kort måste man passa och får då även bomben - <span><i class="fa fa-bomb"></i></span>. 
         <br />
         <br />
-        Spelaren som blir av med sina kort först vinner ronden. Övriga spelare får bestraffningspoäng för varje kort man har kvar (15 p för ess, 10 p för klätt kort, 5 p för varje övrigt kort och 25 p extra för den som har asken).
+        Spelaren som blir av med sina kort först vinner ronden. Övriga spelare får bestraffningspoäng för varje kort man har kvar (15 p för ess, 10 p för klätt kort, 5 p för varje övrigt kort och 25 p extra för den som har bomben).
         <br />
         <br />
         Spelet är slut när någon spelare kommer över en viss totalsumma. Personen med minst antal bestraffningspoäng vinner spelet. 
@@ -66,6 +66,6 @@ p {
   margin: 20px;
 }
 p span{
-  font-size: 28px;
+  font-size: 18px;
 }
 </style>

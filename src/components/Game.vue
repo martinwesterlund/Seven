@@ -30,11 +30,12 @@
           class="cpu"
           v-for="player in cpus"
           :key="player.name"
-          :class="{ myTurn: 'player'+ state.playersTurn === player.name}"
+          :class="[{ myTurn: 'player'+ state.playersTurn === player.name}, { showAll: state.roundOver}]"
         >
           <div class="box">
+            <span class="the-box" v-show="player.hasTheBox"><i class="fa fa-bomb"></i></span>
             <div v-if="state.round > 0">{{ player.alias }}</div>
-            <span class="the-box" v-show="player.hasTheBox">&#x2620;</span>
+            <span class="round-score" v-if='state.roundOver'>  {{player.roundScore}}</span>
           </div>
           <div class="card-area">
             <div
@@ -45,7 +46,10 @@
               :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
               :class="[{playable : card.isPlayable && state.helpOn}, {cpu : player.type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
             >
-              <div class="inner-card"></div>
+              <div v-if="state.roundOver" class="inner-card">
+                <div>{{card.suit}}</div>
+                <div>{{card.value}}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -53,16 +57,16 @@
         <div
           v-if="state.round > 0"
           id="player"
-          :class="{ myTurn: 'player'+ state.playersTurn === state.players[0].name}"
+          :class="[{ myTurn: 'player'+ state.playersTurn === state.players[0].name}, { showAll: state.roundOver}]"
         >
           <div class="box">
-            <div>
-              {{state.players[0].alias}}
-              <span
+            <span
                 class="the-box"
                 v-show="state.players[0].hasTheBox"
-              >&#x2620;</span>
-            </div>
+              ><i class="fa fa-bomb"> </i></span>
+            <div v-if="state.round > 0">{{state.players[0].alias}}</div>
+              <span class="round-score" v-if='state.roundOver'>{{state.players[0].roundScore}}</span>
+            
           </div>
           <div class="card-area">
             <div
@@ -145,6 +149,9 @@ body {
 }
 
 #btn-bar {
+  // position: absolute;
+  // bottom: 55px;
+  margin-top: 30px;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -158,7 +165,7 @@ button {
   text-shadow: 0 0 10px #000;
   // padding: 10px;
   font-family: "Slackey", cursive;
-  font-size: 30px;
+  font-size: 26px;
   animation: button 0.7s linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -173,7 +180,8 @@ button {
 
 #game-field {
   width: 95%;
-
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
   margin: 2vh auto 1vh;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -218,7 +226,10 @@ button {
 }
 
 #players-area {
-  width: 95%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
   margin: 5px auto;
   padding: 0;
 }
@@ -228,7 +239,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid black; */
+  font-family: "Slackey", cursive;
+  font-weight: normal;
   min-width: 50px;
   font-size: 14px;
 }
@@ -236,10 +248,22 @@ button {
 .the-box {
   font-weight: bold;
   color: #000;
-  margin-left: 5px;
-  font-size: 14px;
+  margin-right: 5px;
+  font-size: 12px;
   text-shadow: 0 0 4px #fff;
-  /* text-shadow: 1px 1px #000; */
+  animation: alive 0.7s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0.3s;
+}
+
+.round-score{
+  margin-left: 20px;
+  color: #cec107;
+  animation: alive 0.7s linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0.3s;
 }
 .cpu {
   display: flex;
@@ -252,11 +276,16 @@ button {
   justify-content: center;
   align-items: center;
   width: 5vw;
-  height: 10vw;
+  height: 8vw;
   margin: 2px;
   background-color: #fff;
   opacity: 1;
   pointer-events: none;
+  border-radius: 2px;
+}
+
+.showAll{
+  opacity: 1 !important;
 }
 #player {
   display: flex;
@@ -270,8 +299,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
-  width: 8vw;
+  border-radius: 2px;
+  min-width: 3vw;
+  width: 7vw;
   height: 10vw;
   margin: 3px;
   background-color: #fff;
@@ -282,11 +312,24 @@ button {
   background-color:lawngreen;
 } */
 
-.card-area {
+.cpu .card-area {
   height: 10vw;
   display: flex;
+  // flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  // margin-bottom: 5px;
+  /* pointer-events: none; */
+}
+
+#player .card-area {
+  width: 100%;
+  height: 10vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // margin-bottom: 5px;
   /* pointer-events: none; */
 }
 
@@ -296,8 +339,17 @@ button {
 }
 
 .inner-card {
-  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  // background-color:#fff;
   text-align: center;
+}
+
+.cpu .inner-card{
+  background-color: #fff;
 }
 
 .card:active {
@@ -514,6 +566,18 @@ button {
   }
   100% {
     transform: scaleX(1.05) scaleY(1);
+  }
+}
+
+@keyframes alive {
+  0% {
+    transform: scaleX(1) scaleY(1.2);
+  }
+  50% {
+    transform: scaleX(1.2);
+  }
+  100% {
+    transform: scaleX(1.2) scaleY(1);
   }
 }
 </style>

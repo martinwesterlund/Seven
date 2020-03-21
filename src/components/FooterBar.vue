@@ -38,7 +38,7 @@ export default {
 
 #footer {
   width: 100%;
-  height: 60px;
+  height: 50px;
   margin: 0;
   display: flex;
   justify-content: space-around;
@@ -53,7 +53,7 @@ export default {
 
 #footer-bg {
   width: 100%;
-  height: 60px;
+  height: 50px;
   position: fixed;
   background-color: #003a00;
   opacity: 0.9;
