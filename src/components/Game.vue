@@ -91,7 +91,6 @@
       <button v-if="!state.roundOver && state.round === 0" @click="startGame()">Dela ut kort</button>
       <button v-if="state.ableToPlay == false && state.playersTurn === 1" @click="pass()">Pass!</button>
       <button v-if="state.roundOver && state.gameOver == false" @click="newRound()">Ny rond!</button>
-      <button>Hejsan</button>
       <router-link to="/scoreboard">
         <button v-if="state.gameOver">Spelet slut! Se vem som vann!</button>
       </router-link>
