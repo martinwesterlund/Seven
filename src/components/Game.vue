@@ -33,9 +33,11 @@
           :class="[{ myTurn: 'player'+ state.playersTurn === player.name}, { showAll: state.roundOver}]"
         >
           <div class="box">
-            <span class="the-box" v-show="player.hasTheBox"><i class="fa fa-bomb"></i></span>
+            <span class="the-box" v-show="player.hasTheBox">
+              <i class="fa fa-bomb"></i>
+            </span>
             <div v-if="state.round > 0">{{ player.alias }}</div>
-            <span class="round-score" v-if='state.roundOver'>  {{player.roundScore}}</span>
+            <span class="round-score" v-if="state.roundOver">{{player.roundScore}}</span>
           </div>
           <div class="card-area">
             <div
@@ -60,13 +62,11 @@
           :class="[{ myTurn: 'player'+ state.playersTurn === state.players[0].name}, { showAll: state.roundOver}]"
         >
           <div class="box">
-            <span
-                class="the-box"
-                v-show="state.players[0].hasTheBox"
-              ><i class="fa fa-bomb"> </i></span>
+            <span class="the-box" v-show="state.players[0].hasTheBox">
+              <i class="fa fa-bomb"></i>
+            </span>
             <div v-if="state.round > 0">{{state.players[0].alias}}</div>
-              <span class="round-score" v-if='state.roundOver'>{{state.players[0].roundScore}}</span>
-            
+            <span class="round-score" v-if="state.roundOver">{{state.players[0].roundScore}}</span>
           </div>
           <div class="card-area">
             <div
@@ -94,19 +94,12 @@
       <router-link to="/scoreboard">
         <button v-if="state.gameOver">Spelet slut! Se vem som vann!</button>
       </router-link>
-      
     </div>
-    
-    
   </div>
 </template>
 
 <script>
-// import FooterBar from "./FooterBar.vue";
 export default {
-  components: {
-    
-  },
   computed: {
     state() {
       return this.$store.state;
@@ -117,9 +110,6 @@ export default {
         this.$store.state.numberOfOpponents + 1
       );
     }
-    // deck(){
-    //   return this.$store.state.deck
-    // }
   },
   methods: {
     startGame() {
@@ -131,9 +121,6 @@ export default {
     pass() {
       this.$store.commit("pass");
     },
-    // placeCard(card, player) {
-    //   this.$store.commit("placeCard", { card, player });
-    // }
     placeCard(card, player) {
       this.$store.dispatch("slideAwayCard", { card, player });
     }
@@ -167,7 +154,6 @@ button {
   outline: none;
   color: #fff;
   text-shadow: 0 0 10px #000;
-  // padding: 10px;
   font-family: "Slackey", cursive;
   font-size: 20px;
   animation: button 0.7s linear;
@@ -184,8 +170,7 @@ button {
 
 #game-field {
   width: 80%;
-  // width: 95%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   margin: 2vh auto 1vh;
   display: grid;
@@ -219,7 +204,6 @@ button {
 
 .played-card {
   background-color: white;
-  /* font-size: 10px; */
   border: 1px solid black;
   border-radius: 4px;
 }
@@ -232,7 +216,7 @@ button {
 
 #players-area {
   width: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
   font-weight: bold;
   margin: 5px auto;
@@ -262,7 +246,7 @@ button {
   animation-delay: 0.3s;
 }
 
-.round-score{
+.round-score {
   margin-left: 20px;
   color: #cec107;
   animation: alive 0.7s linear;
@@ -289,7 +273,7 @@ button {
   border-radius: 2px;
 }
 
-.showAll{
+.showAll {
   opacity: 1 !important;
 }
 #player {
@@ -312,19 +296,11 @@ button {
   background-color: #fff;
 }
 
-/* .card:active{
-  scale: 2;
-  background-color:lawngreen;
-} */
-
 .cpu .card-area {
   height: 10vw;
   display: flex;
-  // flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  // margin-bottom: 5px;
-  /* pointer-events: none; */
 }
 
 #player .card-area {
@@ -334,8 +310,6 @@ button {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  // margin-bottom: 5px;
-  // pointer-events: none; 
 }
 
 .myTurn {
@@ -349,86 +323,36 @@ button {
   justify-content: center;
   width: 100%;
   height: 100%;
-  // background-color:#fff;
   text-align: center;
 }
 
-.cpu .inner-card{
+.cpu .inner-card {
   background-color: #fff;
 }
 
-// .card:active {
-//   transform: scale(2) translateY(-20px);
-// }
-
-/* #player .card-area{
-  overflow-x: scroll;
-  overflow-y: auto;
-} */
-
-/* .myTurn {
-  opacity: 1 !important;
-  pointer-events: all !important;
-} */
-
-/* .hasTheBox {
-  opacity: 1;
-} */
-
 .unknownCard {
-  /* width: 100px;
-  min-height: 150px; */
-
   border: 1px solid black;
-  /* opacity: 1; */
+
   background-color: $card-color !important;
   animation-name: flipCard;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
-  /* color: $card-color; */
 }
-
-/* .card {
-  font-size: 20px;
-  margin: 4px 2px;
-  min-width: 45px;
-  height: 75px;
-  border: 1px solid black;
-  cursor: pointer;
-
-} */
-
-/* .card:last-child{
-  flex: 0 0 auto;
-}
-
-.innerCard{
-  width: 40px;
-  height: 75px;
-} */
 
 .playable {
   background-color: $playable-card !important;
-  /* animation-name: playable;
-  animation-duration: 0.5s;
-  animation-direction: alternate-reverse;
-  animation-iteration-count: infinite; */
 }
 
 .cardSlide {
   animation: slideCard 0.5s linear;
-  /* transform: translateX(400px);
-  opacity: 0; */
 }
 
 .cpu .card {
-  /* color: $card-color !important; */
   background-color: $card-color !important;
 }
 
 #s7 {
   grid-area: S7;
-  /* opacity: 0.8; */
 }
 
 #h7 {
@@ -476,37 +400,6 @@ button {
 #k6 {
   grid-area: K6-E;
 }
-
-// #footer {
-//   width: 100%;
-//   height: 50px;
-//   margin: 0;
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   position: fixed;
-//   bottom: 0%;
-//   opacity: 0;
-//   animation-name: footer-fade;
-//   animation-duration: 2s;
-//   animation-fill-mode: forwards;
-//   animation-delay: 1s;
-// }
-
-// #footer-bg {
-//   width: 100%;
-//   height: 50px;
-//   position: fixed;
-//   background-color: #003a00;
-//   opacity: 0.6;
-//   z-index: -1;
-// }
-
-// i {
-//   color: #fff;
-//   font-size: 30px;
-//   opacity: 1;
-// }
 
 .fadeInCard {
   animation-name: fadeIn;

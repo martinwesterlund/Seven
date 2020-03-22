@@ -1,30 +1,26 @@
 <template>
   <div id="app">
-    <FooterBar v-if="($route.path !== '/' && $route.path !== '/setup' && $route.path !== '/about')"></FooterBar>
+    <h3
+      id="message"
+    >Detta är ett kortspel anpassat för mobilen, vänligen skruva ner skärmbredden till 480 pixlar eller mindre.</h3>
     <div id="bg"></div>
-    <transition name="slide" mode="out-in">
-      <router-view>
-        
-      </router-view>
-    </transition>
-  
+    <div id="mobile-wrapper">
+      <FooterBar
+        v-if="($route.path !== '/' && $route.path !== '/setup' && $route.path !== '/about')"
+      ></FooterBar>
+
+      <transition name="slide" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
-import FooterBar from "./components/FooterBar.vue"
-// import Game from "./components/Game.vue"
-// import Scoreboard from "./components/Scoreboard.vue"
-// import Settings from "./components/Settings.vue"
-// import Start from "./components/Start.vue"
+import FooterBar from "./components/FooterBar.vue";
 
 export default {
   components: {
-    // Navbar,
-    // Game
-    // Scoreboard,
-    // Settings
-    // Start
     FooterBar
   },
   created() {
@@ -38,24 +34,26 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Slackey&display=swap");
 
-
 body {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
   margin: 0;
   padding: 0;
   font-family: "Slackey", cursive;
-  background-color: #006e09;
+  background-color: black;
+  margin: 0 auto;
+}
+
+#message {
+  display: none;
 }
 #bg {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-image: url("assets/cards.jpg");
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/cards2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   z-index: -5;
-  opacity: 0.1;
 }
 
 .slide-enter-active,
@@ -63,10 +61,39 @@ body {
   transition: opacity 0.2s, transform 0.2s;
 }
 .slide-enter,
-.slide-leave-to{
+.slide-leave-to {
   opacity: 0;
   transform: translateX(-30%);
 }
 
+@media only screen and (min-width: 481px) {
+  body {
+    width: 100%;
+    padding: 0;
+    font-family: "Slackey", cursive;
+    background-color: transparent;
+  }
+  #mobile-wrapper {
+    display: none;
+  }
 
+  #message {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+    width: 400px;
+    height: 200px;
+    font-size: 28px;
+    display: unset;
+    color: white;
+    text-align: center;
+  }
+
+  html {
+    background-color: #006e09;
+  }
+}
 </style>

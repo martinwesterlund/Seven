@@ -1,11 +1,20 @@
 <template>
   <div>
     <div id="gamesetup-wrapper">
-      <h3>Antal motspelare: <span>{{state.numberOfOpponents}}</span></h3>
+      <h3>
+        Antal motspelare:
+        <span>{{state.numberOfOpponents}}</span>
+      </h3>
       <vue-slider id="slider1" v-model="state.numberOfOpponents" v-bind="state.opponentsOptions" />
-      <h3>Spelet slut vid: <span>{{state.endScore}}</span> p</h3>
+      <h3>
+        Spelet slut vid:
+        <span>{{state.endScore}}</span> p
+      </h3>
       <vue-slider id="slider2" v-model="state.endScore" v-bind="state.endScoreOptions" />
-      <h3>Speltempo: <span>{{ state.speed }}</span></h3>
+      <h3>
+        Speltempo:
+        <span>{{ state.speed }}</span>
+      </h3>
       <vue-slider id="slider" v-model="state.speed" v-bind="state.speedOptions" />
       <h3>Hjälpmedel</h3>
       <h5>Visa spelbara kort</h5>
@@ -51,12 +60,11 @@ export default {
 <style scoped>
 #gamesetup-wrapper {
   padding: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   color: #fff;
   font-size: 18px;
   text-shadow: 0 0 10px #000;
@@ -110,7 +118,6 @@ p {
 
 .switch {
   position: relative;
-  /* display: inline-block; */
   width: 60px;
   height: 34px;
   margin: 0 20px;
@@ -149,18 +156,12 @@ p {
 input:checked + .slider {
   background-color: #2196f3;
 }
-/* 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-} */
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }

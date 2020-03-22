@@ -25,7 +25,7 @@
       </router-link>
       <router-link to="/game">
         <div id="start1">
-          <button id="start" >SNABBSTART!</button>
+          <button id="start">SNABBSTART!</button>
         </div>
       </router-link>
     </div>
@@ -39,14 +39,14 @@ export default {
       this.$store.commit("showFooter");
     }
   }
-}
+};
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Slackey&display=swap");
 
 #wrapper {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@ export default {
 
 #logo {
   margin-right: 15px;
-  font-size: 23vw;
+  font-size: 80px;
   text-shadow: 0 0 10px #000;
   text-align: center;
   color: #fff;

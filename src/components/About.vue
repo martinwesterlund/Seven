@@ -15,11 +15,10 @@ export default {};
 </script>
 
 <style scoped>
-
 #about-wrapper {
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -30,14 +29,13 @@ export default {};
   text-shadow: 0 0 10px #000;
 }
 
-p{
+p {
   text-align: center;
   margin: 20px;
-  margin-bottom: 15vh;
+  margin-bottom: 15%;
 }
 
 #back {
-  
   background-color: transparent;
   border: none;
   outline: none;
