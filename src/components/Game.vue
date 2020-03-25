@@ -75,7 +75,7 @@
               v-for="card in state.players[0].cards"
               :key="card.index"
               :style="[card.suit == '♥' || card.suit == '♦' ? {color:'red'} : {color:'black'}]"
-              :class="[{playable : card.isPlayable && state.helpOn}, {cpu : state.players[0].type === 'cpu'}, {cardSlide : card.slideEffectOn}]"
+              :class="[{playable : card.isPlayable && state.helpOn}, {cpu : state.players[0].type === 'cpu'}, {cardSlide : card.slideEffectOn}, {unplayable : state.roundOver || 'player'+ state.playersTurn !== state.players[0].name}]"
             >
               <div class="inner-card">
                 <div>{{card.suit}}</div>
@@ -341,6 +341,10 @@ button {
 
 .playable {
   background-color: $playable-card !important;
+}
+
+.unplayable {
+  pointer-events: none;
 }
 
 .cardSlide {
